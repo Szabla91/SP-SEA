@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <title>Kalkulator Demurrage / Detention</title>
+  <style>
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  color: #222 !important;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 30px;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn-back {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 8px 16px;
+  background-color: #be1e2d;
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+}
+
+.btn-back:hover {
+  background-color: #a31520;
+}
+
+.page-header h1 {
+  color: #be1e2d;
+  font-size: 2.5rem;
+  margin: 0;
+  padding: 0 40px;
+  text-align: center;
+  border-bottom: 2px solid #be1e2d;
+  padding-bottom: 10px;
+  width: 100%;
+}
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 500;
+color: #222;
+}
+select, input[type="date"] {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 5px;
+}
+.section {
+  background-color: #fafbfc;
+  color: #222;
+  margin-bottom: 30px;
+  border: 1px solid #e5e5e5;
+  padding: 20px 24px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  display: none;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h2 {
+  color: #222;
+  margin-top: 0;
+}
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #be1e2d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+button:hover {
+  background-color: #a31520;
+}
+#info {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #444;
+  background-color: #eaeaea;
+  padding: 10px;
+  border-radius: 6px;
+  max-width: 700px;
+}
+#result_demurrage {
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+th {
+  background-color: #eee;
+}
+
+#result_dem_det table,
+#result_dem_det th,
+#result_dem_det td,
+#result_demurrage table,
+#result_demurrage th,
+#result_demurrage td,
+#result_detention table,
+#result_detention th,
+#result_detention td,
+#result_storage table,
+#result_storage th,
+#result_storage td {
+  color: #222 !important;
+}
+
+#result_dem_det,
+#result_demurrage,
+#result_detention,
+#result_storage {
+  color: #222 !important;
+}
+
+.form-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.form-header label,
+.form-header #info {
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+}
+
+  </style>
+</head>
+<body>
+
+<header class="page-header">
+  <a href="Baza wiedzy morze.html" class="btn-back">← Powrót do ekranu głównego</a>
+  <h1>Kalkulator kosztów Demurrage / Detention oraz Storage w Polskich portach</h1>
+</header>
+
+
+
+<div class="form-header">
+  <label>Dla jakiego armatora chcesz wyliczyć koszty?
+    <select id="armator" onchange="onArmatorChange()">
+      <option value="">Wybierz armatora</option>
+      <option value="CMA">CMA</option>
+      <option value="COSCO">COSCO</option>
+      <option value="EVERGREEN">EVERGREEN</option>
+      <option value="HAPAG">HAPAG LLOYD</option>
+      <option value="HMM">HMM</option>
+      <option value="MAERSK">MAERSK</option>
+      <option value="MSC">MSC</option>
+      <option value="ONE">ONE</option>
+      <option value="OOCL">OOCL</option>
+      <option value="YANG">YANG MING</option>
+      <option value="ZIM">ZIM</option>
+    </select>
+  </label>
+
+  <div id="info"></div></div>
+
+  <div id="section_dem_det" class="section">
+    <h2>DEMURRAGE + DETENTION (łączone)</h2>
+    <label>Data wprowadzenia kontenera do portu: <input type="date" id="dd_start"></label>
+    <label>Data zdania pustego kontenera: <input type="date" id="dd_end"></label>
+    <label>Port:
+      <select id="dd_port">
+        <option value="Gdansk">Gdańsk</option>
+        <option value="Gdynia">Gdynia</option>
+      </select>
+    </label>
+    <label>Typ kontenera:
+      <select id="dd_type">
+        <option value="20DRY">20 DRY</option>
+        <option value="40DRY">40 DRY</option>
+
+      </select>
+    </label>
+<button type="button" onclick="obliczDemDet()">Oblicz Demurrage + Detention</button>
+<div id="result_dem_det" style="margin-top: 20px;"></div>
+  </div>
+
+  <div id="section_dem" class="section">
+    <h2>DEMURRAGE</h2>
+    <label>Data wprowadzenia kontenera do portu: <input type="date" id="d_start"></label>
+    <label>Data odbioru kontenera z terminala: <input type="date" id="d_end"></label>
+    <label>Port:
+      <select id="d_port">
+        <option value="Gdansk">Gdańsk</option>
+        <option value="Gdynia">Gdynia</option>
+      </select>
+    </label>
+    <label>Typ kontenera:
+      <select id="d_type">
+        <option value="20DRY">20 DRY</option>
+        <option value="40DRY">40 DRY</option>
+
+      </select>
+    </label>
+    <button type="button" onclick="obliczDemurrage()">Oblicz Demurrage</button>
+    <div id="result_demurrage"></div>
+  </div>
+
+ <div id="section_det" class="section">
+    <h2>DETENTION</h2>
+    <label>Data odbioru kontenera z terminala: <input type="date" id="t_start"></label>
+    <label>Data zdania pustego kontenera: <input type="date" id="t_end"></label>
+    <label>Port:
+      <select id="t_port">
+        <option value="Gdansk">Gdańsk</option>
+        <option value="Gdynia">Gdynia</option>
+      </select>
+    </label>
+    <label>Typ kontenera:
+      <select id="t_type">
+        <option value="20DRY">20 DRY</option>
+        <option value="40DRY">40 DRY</option>
+
+      </select>
+    </label>
+    <button type="button" onclick="obliczDetention()">Oblicz Detention</button>
+<div id="result_detention"></div>  </div>
+
+  <div id="section_storage" class="section">
+    <h2>STORAGE</h2>
+    <label>Data wprowadzenia kontenera do portu: <input type="date" id="s_start"></label>
+    <label>Data odbioru kontenera z terminala: <input type="date" id="s_end"></label>
+    <label>Port:
+      <select id="s_port">
+        <option value="Gdansk">Gdańsk</option>
+        <option value="Gdynia">Gdynia</option>
+      </select>
+    </label>
+    <label>Typ kontenera:
+      <select id="s_type">
+        <option value="20DRY">20 DRY</option>
+        <option value="40DRY">40 DRY</option>
+
+      </select>
+    </label>
+<button type="button" onclick="obliczStorage()">Oblicz Storage</button>
+<div id="result_storage"></div>
+  </div>
+
+
+  <script>
+    const armatorLogic = {
+      COSCO: "combined_with_storage",
+      CMA: "combined_with_storage",
+      EVERGREEN: "separate",
+      HAPAG: "separate",
+      MAERSK: "separate",
+      MSC: "combined_with_storage",
+      ONE: "separate",
+      OOCL: "combined_with_storage",
+      YANG: "separate",
+      ZIM: "combined"
+    };
+
+
+const demurragePricing = {
+  EVERGREEN: {
+    Gdansk: {
+      "20DRY": { freeDays: 7, rates: [ { from: 8, to: 14, rate: 35 }, { from: 15, to: 21, rate: 55 }, { from: 22, to: Infinity, rate: 75 } ] },
+      "40DRY": { freeDays: 7, rates: [ { from: 8, to: 14, rate: 70 }, { from: 15, to: 21, rate: 110 }, { from: 22, to: Infinity, rate: 150 } ] }
+    },
+    Gdynia: {
+      "20DRY": { freeDays: 7, rates: [ { from: 13, to: 17, rate: 45 }, { from: 18, to: 22, rate: 60 }, { from: 23, to: Infinity, rate: 75 } ] },
+      "40DRY": { freeDays: 7, rates: [ { from: 13, to: 17, rate: 90 }, { from: 18, to: 22, rate: 120 }, { from: 23, to: Infinity, rate: 150 } ] }
+    }
+  },
+  HAPAG: {
+    Gdansk: {
+      "20DRY": { freeDays: 5, rates: [ { from: 6, to: 16, rate: 45 }, { from: 17, to: Infinity, rate: 75 } ] },
+      "40DRY": { freeDays: 5, rates: [ { from: 6, to: 16, rate: 75 }, { from: 17, to: Infinity, rate: 110 } ] }
+    },
+    Gdynia: {
+      "20DRY": { freeDays: 7, rates: [ { from: 6, to: 16, rate: 60 }, { from: 17, to: Infinity, rate: 100 } ] },
+      "40DRY": { freeDays: 7, rates: [ { from: 6, to: 16, rate: 60 }, { from: 17, to: Infinity, rate: 100 } ] }
+    }
+  },
+  MAERSK: {
+    Gdansk: {
+      "20DRY": { freeDays: 5, rates: [ { from: 6, to: 17, rate: 60 }, { from: 18, to: 30, rate: 85 }, { from: 31, to: Infinity, rate: 110 } ] },
+      "40DRY": { freeDays: 5, rates: [ { from: 6, to: 17, rate: 80 }, { from: 18, to: 30, rate: 115 }, { from: 31, to: Infinity, rate: 135 } ] }
+    },
+    Gdynia: {
+      "20DRY": { freeDays: 5, rates: [ { from: 6, to: 17, rate: 60 }, { from: 18, to: 30, rate: 85 }, { from: 31, to: Infinity, rate: 110 } ] },
+      "40DRY": { freeDays: 5, rates: [ { from: 6, to: 17, rate: 80 }, { from: 18, to: 30, rate: 115 }, { from: 31, to: Infinity, rate: 135 } ] }
+    }
+  },
+  ONE: {
+    Gdansk: {
+      "20DRY": { freeDays: 10, rates: [ { from: 11, to: 17, rate: 35 }, { from: 18, to: Infinity, rate: 55 } ] },
+      "40DRY": { freeDays: 10, rates: [ { from: 11, to: 17, rate: 55 }, { from: 18, to: Infinity, rate: 95 } ] }
+    },
+    Gdynia: {
+      "20DRY": { freeDays: 10, rates: [ { from: 11, to: 17, rate: 35 }, { from: 18, to: Infinity, rate: 55 } ] },
+      "40DRY": { freeDays: 10, rates: [ { from: 11, to: 17, rate: 55 }, { from: 18, to: Infinity, rate: 95 } ] }
+    }
+  },
+  YANG: {
+    Gdansk: {
+      "20DRY": { freeDays: 10, rates: [ { from: 11, to: 14, rate: 55 }, { from: 15, to: Infinity, rate: 65 } ] },
+      "40DRY": { freeDays: 10, rates: [ { from: 11, to: 14, rate: 65 }, { from: 15, to: Infinity, rate: 85 } ] }
+    },
+    Gdynia: {
+      "20DRY": { freeDays: 10, rates: [ { from: 11, to: 14, rate: 55 }, { from: 15, to: Infinity, rate: 65 } ] },
+      "40DRY": { freeDays: 10, rates: [ { from: 11, to: 14, rate: 65 }, { from: 15, to: Infinity, rate: 85 } ] }
+    }
+  }
+};
+
+
+const demDetPricing = {
+  COSCO: {
+    freeDays: 12,
+    Gdansk: {
+      "20DRY": [
+        { from: 13, to: 17, rate: 45 },
+        { from: 18, to: 22, rate: 60 },
+        { from: 23, to: Infinity, rate: 75 }
+      ],
+      "40DRY": [
+        { from: 13, to: 17, rate: 90 },
+        { from: 18, to: 22, rate: 120 },
+        { from: 23, to: Infinity, rate: 150 }
+      ]
+    },
+    Gdynia: {
+      "20DRY": [
+        { from: 13, to: 17, rate: 45 },
+        { from: 18, to: 22, rate: 60 },
+        { from: 23, to: Infinity, rate: 75 }
+      ],
+      "40DRY": [
+        { from: 13, to: 17, rate: 90 },
+        { from: 18, to: 22, rate: 120 },
+        { from: 23, to: Infinity, rate: 150 }
+      ]
+    }
+  },
+  CMA: {
+    freeDays: 8,
+    Gdansk: {
+      "20DRY": [
+        { from: 9, to: 12, rate: 32 },
+        { from: 13, to: 17, rate: 42 },
+        { from: 18, to: Infinity, rate: 88 }
+      ],
+      "40DRY": [
+        { from: 9, to: 12, rate: 52 },
+        { from: 13, to: 17, rate: 77 },
+        { from: 18, to: Infinity, rate: 174 }
+      ]
+    },
+    Gdynia: {
+      "20DRY": [
+        { from: 9, to: 12, rate: 32 },
+        { from: 13, to: 17, rate: 42 },
+        { from: 18, to: Infinity, rate: 88 }
+      ],
+      "40DRY": [
+        { from: 9, to: 12, rate: 52 },
+        { from: 13, to: 17, rate: 77 },
+        { from: 18, to: Infinity, rate: 174 }
+      ]
+    }
+  },
+  OOCL: {
+    freeDays: 10,
+    Gdansk: {
+      "20DRY": [
+        { from: 11, to: 17, rate: 50 },
+        { from: 18, to: Infinity, rate: 75 }
+      ],
+      "40DRY": [
+        { from: 11, to: 17, rate: 100 },
+        { from: 18, to: Infinity, rate: 150 }
+      ]
+    },
+    Gdynia: {
+      "20DRY": [
+        { from: 11, to: 17, rate: 50 },
+        { from: 18, to: Infinity, rate: 75 }
+      ],
+      "40DRY": [
+        { from: 11, to: 17, rate: 100 },
+        { from: 18, to: Infinity, rate: 150 }
+      ]
+    }
+  },
+  ZIM: {
+    freeDays: 12,
+    Gdansk: {
+      "20DRY": [
+        { from: 6, to: 9, rate: 20 },
+        { from: 10, to: 13, rate: 35 },
+        { from: 14, to: Infinity, rate: 55 }
+      ],
+      "40DRY": [
+        { from: 6, to: 9, rate: 28 },
+        { from: 10, to: 13, rate: 50 },
+        { from: 14, to: Infinity, rate: 80 }
+      ]
+    },
+    Gdynia: {
+      "20DRY": [
+        { from: 6, to: 9, rate: 20 },
+        { from: 10, to: 13, rate: 35 },
+        { from: 14, to: Infinity, rate: 55 }
+      ],
+      "40DRY": [
+        { from: 6, to: 9, rate: 28 },
+        { from: 10, to: 13, rate: 50 },
+        { from: 14, to: Infinity, rate: 80 }
+      ]
+    }
+  },
+
+MSC: {
+  freeDays: {
+    Gdansk: 12,
+    Gdynia: 7
+  },
+  Gdansk: {
+    "20DRY": [
+      { from: 13, to: 17, rate: 45 },
+      { from: 18, to: 21, rate: 60 },
+      { from: 22, to: Infinity, rate: 75 }
+    ],
+    "40DRY": [
+      { from: 13, to: 17, rate: 45 },
+      { from: 18, to: 21, rate: 60 },
+      { from: 22, to: Infinity, rate: 75 }
+    ]
+  },
+  Gdynia: {
+    "20DRY": [
+      { from: 8, to: 14, rate: 25 },
+      { from: 15, to: 19, rate: 40 },
+      { from: 20, to: Infinity, rate: 70 }
+    ],
+    "40DRY": [
+      { from: 8, to: 14, rate: 40 },
+      { from: 15, to: 19, rate: 80 },
+      { from: 20, to: Infinity, rate: 85 }
+    ]
+  }
+}
+
+
+};
+
+
+
+const storagePricing = {
+  COSCO: {
+    freeDays: { Gdansk: 8, Gdynia: 7 },
+    Gdansk: {
+      "20DRY": [
+        { from: 9, to: 14, rate: 7 },
+        { from: 15, to: 30, rate: 15 },
+        { from: 31, to: 60, rate: 25 },
+        { from: 61, to: Infinity, rate: 50 },
+      ],
+      "40DRY": [
+        { from: 9, to: 14, rate: 14 },
+        { from: 15, to: 30, rate: 30 },
+        { from: 31, to: 60, rate: 50 },
+        { from: 61, to: Infinity, rate: 100 },
+      ],
+    },
+    Gdynia: {
+      "20DRY": [
+        { from: 8, to: 14, rate: 2.8 },
+        { from: 15, to: 21, rate: 5.6 },
+        { from: 22, to: 28, rate: 7.3 },
+        { from: 29, to: 90, rate: 21.9 },
+        { from: 91, to: Infinity, rate: 43.9 },
+      ],
+      "40DRY": [
+        { from: 8, to: 14, rate: 5.4 },
+        { from: 15, to: 21, rate: 11.2 },
+        { from: 22, to: 28, rate: 14.6 },
+        { from: 29, to: 90, rate: 43.8 },
+        { from: 91, to: Infinity, rate: 87.8 },
+      ],
+    },
+  },
+  CMA: {
+    freeDays: { Gdansk: 7, Gdynia: null }, // Gdynia nie dotyczy
+    Gdansk: {
+      "20DRY": [
+        { from: 8, to: 14, rate: 7 },
+        { from: 15, to: 30, rate: 15 },
+        { from: 31, to: 60, rate: 25 },
+        { from: 61, to: 90, rate: 45 },
+        { from: 91, to: Infinity, rate: 85 },
+      ],
+      "40DRY": [
+        { from: 8, to: 14, rate: 14 },
+        { from: 15, to: 30, rate: 30 },
+        { from: 31, to: 60, rate: 50 },
+        { from: 61, to: 90, rate: 90 },
+        { from: 91, to: Infinity, rate: 170 },
+      ],
+    },
+    Gdynia: null // Specjalny przypadek
+  },
+MSC: {
+  freeDays: {
+    Gdansk: 7,
+    Gdynia: 10
+  },
+  Gdansk: {
+    "20DRY": [
+      { from: 8, to: 14, rate: 8.5 },
+      { from: 15, to: 30, rate: 17 },
+      { from: 31, to: 60, rate: 25 },
+      { from: 61, to: 90, rate: 50 },
+      { from: 91, to: Infinity, rate: 90 }
+    ],
+    "40DRY": [
+      { from: 8, to: 14, rate: 17 },
+      { from: 15, to: 30, rate: 34 },
+      { from: 31, to: 60, rate: 50 },
+      { from: 61, to: 90, rate: 100 },
+      { from: 91, to: Infinity, rate: 180 }
+    ]
+  },
+  Gdynia: {
+    "20DRY": [
+      { from: 11, to: 14, rate: 8 },
+      { from: 15, to: 30, rate: 10.5 },
+      { from: 31, to: 60, rate: 21 },
+      { from: 61, to: 90, rate: 37 },
+      { from: 91, to: Infinity, rate: 74 }
+    ],
+    "40DRY": [
+      { from: 11, to: 14, rate: 16 },
+      { from: 15, to: 30, rate: 21 },
+      { from: 31, to: 60, rate: 42 },
+      { from: 61, to: 90, rate: 74 },
+      { from: 91, to: Infinity, rate: 148 }
+    ]
+  }
+},
+
+  OOCL: {
+    freeDays: { Gdansk: 5, Gdynia: 7 },
+    Gdansk: {
+      "20DRY": [
+        { from: 6, to: 14, rate: 7 },
+        { from: 15, to: 30, rate: 13 },
+        { from: 31, to: 37, rate: 24 },
+        { from: 38, to: 103, rate: 46 },
+        { from: 104, to: Infinity, rate: 72 },
+      ],
+      "40DRY": [
+        { from: 6, to: 14, rate: 14 },
+        { from: 15, to: 30, rate: 26 },
+        { from: 31, to: 37, rate: 46 },
+        { from: 38, to: 103, rate: 92 },
+        { from: 104, to: Infinity, rate: 144 },
+      ],
+    },
+    Gdynia: {
+      "20DRY": [
+        { from: 8, to: 14, rate: 3 },
+        { from: 15, to: 21, rate: 6 },
+        { from: 22, to: 28, rate: 8 },
+        { from: 29, to: 90, rate: 22 },
+        { from: 91, to: Infinity, rate: 44 },
+      ],
+      "40DRY": [
+        { from: 8, to: 14, rate: 6 },
+        { from: 15, to: 21, rate: 12 },
+        { from: 22, to: 28, rate: 15 },
+        { from: 29, to: 90, rate: 38 },
+        { from: 91, to: Infinity, rate: 77 },
+      ],
+    }
+  }
+};
+
+
+function onStoragePortChange() {
+  const armator = document.getElementById("armator").value;
+  const port = document.getElementById("s_port").value;
+
+  if (armator === "CMA" && port === "Gdynia") {
+    alert("Dla CMA w porcie Gdynia rozliczenia są prowadzone bezpośrednio z terminalem. Wybierz proszę port Gdańsk.");
+    document.getElementById("s_port").value = "Gdansk";
+  }
+}
+
+document.getElementById("s_port").addEventListener("change", onStoragePortChange);
+
+
+function obliczDemDet() {
+  const armator = document.getElementById("armator").value;
+  const port = document.getElementById("dd_port").value;
+  const typ = document.getElementById("dd_type").value;
+  const start = new Date(document.getElementById("dd_start").value);
+  const end = new Date(document.getElementById("dd_end").value);
+  const resultBox = document.getElementById("result_dem_det");
+
+  // Czyszczenie wyniku przy każdej zmianie
+  resultBox.innerHTML = "";
+
+  // Walidacja dat
+  if (!start || !end || isNaN(start) || isNaN(end) || end < start) {
+    resultBox.innerHTML = `<p style='color: red;'>Wprowadź poprawne daty.</p>`;
+    return;
+  }
+
+  const pricingData = demDetPricing[armator];
+  if (!pricingData) {
+    resultBox.innerHTML = `<p style='color: red;'>Brak danych dla wybranego armatora.</p>`;
+    return;
+  }
+
+  // FreeDays – obsługa liczby i obiektu
+  let freeDays = null;
+  if (typeof pricingData.freeDays === 'number') {
+    freeDays = pricingData.freeDays;
+  } else if (typeof pricingData.freeDays === 'object' && pricingData.freeDays !== null) {
+    freeDays = pricingData.freeDays[port];
+  }
+
+  // Pricing
+  const pricing = pricingData[port]?.[typ];
+  if (!pricing || freeDays === undefined || freeDays === null) {
+    resultBox.innerHTML = `<p style='color: red;'>Brak danych dla wybranego portu lub typu kontenera.</p>`;
+    return;
+  }
+
+  // Liczenie dni
+  const dni = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+  const przekroczone = Math.max(0, dni - freeDays);
+
+  let koszt = 0;
+  let rows = "";
+
+  pricing.forEach(rate => {
+    const startDay = Math.max(rate.from, freeDays + 1);
+    const endDay = Math.min(rate.to, freeDays + przekroczone);
+    const daysInRange = Math.max(0, endDay - startDay + 1);
+
+    if (daysInRange > 0) {
+      const startDate = new Date(start);
+      startDate.setDate(startDate.getDate() + (startDay - 1));
+      const endDate = new Date(start);
+      endDate.setDate(endDate.getDate() + (endDay - 1));
+
+      const formatDate = d => d.toLocaleDateString("pl-PL");
+      const subtotal = daysInRange * rate.rate;
+      koszt += subtotal;
+
+      rows += `<tr>
+        <td>${formatDate(startDate)}</td>
+        <td>${formatDate(endDate)}</td>
+        <td>${daysInRange}</td>
+        <td>${rate.rate} EUR</td>
+        <td>${subtotal.toFixed(2)} EUR</td>
+      </tr>`;
+    }
+  });
+
+  resultBox.innerHTML = `
+    <p>Dni wolne u tego armatora: <strong>${freeDays}</strong></p>
+    <p>Liczba dni łącznie: <strong>${dni}</strong></p>
+    <p>Dni przekroczone: <strong>${przekroczone}</strong></p>
+    <table>
+      <thead>
+        <tr><th>Od</th><th>Do</th><th>Liczba dni</th><th>Stawka za dzień</th><th>Kwota</th></tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <p style="font-weight:bold; margin-top: 10px;">Łączny koszt: ${koszt.toFixed(2)} EUR</p>
+  `;
+}
+
+
+
+
+function obliczStorage() {
+  const armator = document.getElementById("armator").value;
+  const port = document.getElementById("s_port").value;
+  const typ = document.getElementById("s_type").value;
+  const start = new Date(document.getElementById("s_start").value);
+  const end = new Date(document.getElementById("s_end").value);
+
+  const resultBox = document.getElementById("result_storage");
+  resultBox.innerHTML = "";
+
+  if (!start || !end || isNaN(start) || isNaN(end) || end < start) {
+    resultBox.innerHTML = `<p style='color: red;'>Wprowadź poprawne daty.</p>`;
+    return;
+  }
+
+  const storageData = storagePricing[armator];
+  if (!storageData) {
+    resultBox.innerHTML = `<p style='color: red;'>Brak danych dla wybranego armatora.</p>`;
+    return;
+  }
+
+  const freeDays = storageData.freeDays?.[port];
+  if (freeDays === undefined || freeDays === null) {
+    resultBox.innerHTML = `<p style='color: red;'>Brak danych o dniach wolnych dla wybranego portu.</p>`;
+    return;
+  }
+
+  const pricing = storageData[port]?.[typ];
+  if (!pricing) {
+    resultBox.innerHTML = `<p style='color: red;'>Brak danych do wyliczeń dla wybranego portu lub typu kontenera.</p>`;
+    return;
+  }
+
+  const dni = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+  const przekroczone = Math.max(0, dni - freeDays);
+
+  let koszt = 0;
+  let rows = "";
+
+  pricing.forEach(rate => {
+    const startDay = Math.max(rate.from, freeDays + 1);
+    const endDay = Math.min(rate.to, freeDays + przekroczone);
+    const daysInRange = Math.max(0, endDay - startDay + 1);
+    if (daysInRange > 0) {
+      const startDate = new Date(start);
+      startDate.setDate(startDate.getDate() + (startDay - 1));
+      const endDate = new Date(start);
+      endDate.setDate(endDate.getDate() + (endDay - 1));
+
+      const formatDate = d => d.toLocaleDateString("pl-PL");
+      const subtotal = daysInRange * rate.rate;
+      koszt += subtotal;
+
+      rows += `<tr>
+        <td>${formatDate(startDate)}</td>
+        <td>${formatDate(endDate)}</td>
+        <td>${daysInRange}</td>
+        <td>${rate.rate} EUR</td>
+        <td>${subtotal.toFixed(2)} EUR</td>
+      </tr>`;
+    }
+  });
+
+  resultBox.innerHTML = `
+    <p>Dni wolne storage u tego armatora: <strong>${freeDays}</strong></p>
+    <p>Liczba dni storage: <strong>${dni}</strong></p>
+    <p>Dni przekroczone: <strong>${przekroczone}</strong></p>
+    <table>
+      <thead>
+        <tr><th>Od</th><th>Do</th><th>Liczba dni</th><th>Stawka za dzień</th><th>Kwota</th></tr>
+      </thead>
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>
+    <p style="font-weight:bold; margin-top: 10px;">Łączny koszt storage: ${koszt.toFixed(2)} EUR</p>
+  `;
+}
+
+// Reset wyników storage przy zmianie pól
+document.getElementById("s_start").addEventListener("change", () => {
+  document.getElementById("result_storage").innerHTML = "";
+});
+document.getElementById("s_end").addEventListener("change", () => {
+  document.getElementById("result_storage").innerHTML = "";
+});
+document.getElementById("s_port").addEventListener("change", () => {
+  document.getElementById("result_storage").innerHTML = "";
+});
+document.getElementById("s_type").addEventListener("change", () => {
+  document.getElementById("result_storage").innerHTML = "";
+});
+
+
+function onArmatorChange() {
+  const selected = document.getElementById("armator").value;
+  const mode = armatorLogic[selected];
+
+  const sectionDemDet = document.getElementById("section_dem_det");
+  const sectionDem = document.getElementById("section_dem");
+  const sectionDet = document.getElementById("section_det");
+  const sectionStorage = document.getElementById("section_storage");
+
+  if (sectionDemDet) sectionDemDet.style.display = "none";
+  if (sectionDem) sectionDem.style.display = "none";
+  if (sectionDet) sectionDet.style.display = "none";
+  if (sectionStorage) sectionStorage.style.display = "none";
+
+  let infoText = "";
+
+  switch (mode) {
+    case "combined":
+      infoText = "Ten armator stosuje łączone wyliczenia demurrage + detention.";
+      if (sectionDemDet) sectionDemDet.style.display = "block";
+      break;
+    case "combined_with_storage":
+      infoText = "Ten armator stosuje łączone wyliczenia demurrage + detention oraz osobne storage.";
+      if (sectionDemDet) sectionDemDet.style.display = "block";
+      if (sectionStorage) sectionStorage.style.display = "block";
+      break;
+    case "separate":
+      infoText = "Ten armator stosuje osobne wyliczenia demurrage oraz detention.";
+      if (sectionDem) sectionDem.style.display = "block";
+      if (sectionDet) sectionDet.style.display = "block";
+      break;
+    default:
+      infoText = "Proszę wybrać armatora z listy powyżej.";
+  }
+
+  document.getElementById("info").innerText = infoText;
+
+  // Reset wszystkich formularzy i wyników
+  resetDetentionForm();
+  resetDemurrageForm();
+  resetDemDetForm();
+  resetStorageForm();
+}
+
+
+function resetDemurrageForm() {
+  document.getElementById("d_start").value = "";
+  document.getElementById("d_end").value = "";
+  document.getElementById("d_port").value = "Gdansk";
+  document.getElementById("d_type").value = "20DRY";
+  document.getElementById("result_demurrage").innerHTML = "";
+}
+
+function resetDetentionForm() {
+  document.getElementById("t_start").value = "";
+  document.getElementById("t_end").value = "";
+  document.getElementById("t_port").value = "Gdansk";
+  document.getElementById("t_type").value = "20DRY";
+  document.getElementById("result_detention").innerHTML = "";
+};
+
+function resetDemDetForm() {
+  document.getElementById("dd_start").value = "";
+  document.getElementById("dd_end").value = "";
+  document.getElementById("dd_port").value = "Gdansk";
+  document.getElementById("dd_type").value = "20DRY";
+  const resultBox = document.getElementById("result_dem_det");
+  if(resultBox) resultBox.innerHTML = "";
+}
+
+function resetStorageForm() {
+  document.getElementById("s_start").value = "";
+  document.getElementById("s_end").value = "";
+  document.getElementById("s_port").value = "Gdansk";
+  document.getElementById("s_type").value = "20DRY";
+  document.getElementById("result_storage").innerHTML = "";
+}
+
+
+function obliczDemurrage() {
+  const armator = document.getElementById("armator").value;
+  const port = document.getElementById("d_port").value;
+  const typ = document.getElementById("d_type").value;
+  const start = new Date(document.getElementById("d_start").value);
+  const end = new Date(document.getElementById("d_end").value);
+
+  const resultBox = document.getElementById("result_demurrage");
+  resultBox.innerHTML = "";
+
+  if (!start || !end || isNaN(start) || isNaN(end) || end < start) {
+    resultBox.innerHTML = `<p style='color: red;'>Wprowadź poprawne daty.</p>`;
+    return;
+  }
+
+  const dni = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+  const pricing = demurragePricing[armator]?.[port]?.[typ];
+
+  if (!pricing) {
+    resultBox.innerHTML = `<p style='color: red;'>Brak danych do wyliczeń dla wybranego armatora, portu lub typu kontenera.</p>`;
+    return;
+  }
+
+  const przekroczone = Math.max(0, dni - pricing.freeDays);
+  let koszt = 0;
+  let rows = "";
+
+  pricing.rates.forEach(rate => {
+    const startDay = Math.max(rate.from, pricing.freeDays + 1);
+    const endDay = Math.min(rate.to, pricing.freeDays + przekroczone);
+    const daysInRange = Math.max(0, endDay - startDay + 1);
+    if (daysInRange > 0) {
+      const startDate = new Date(start);
+      startDate.setDate(startDate.getDate() + (startDay - 1));
+      const endDate = new Date(start);
+      endDate.setDate(endDate.getDate() + (endDay - 1));
+
+      const formatDate = d => d.toLocaleDateString("pl-PL");
+      const subtotal = daysInRange * rate.rate;
+      koszt += subtotal;
+
+      rows += `<tr>
+        <td>${formatDate(startDate)}</td>
+        <td>${formatDate(endDate)}</td>
+        <td>${daysInRange}</td>
+        <td>${rate.rate} EUR</td>
+        <td>${subtotal} EUR</td>
+      </tr>`;
+    }
+  });
+
+      resultBox.innerHTML = `
+        <p>Dni wolne demurrage u tego armatora: <strong>${pricing.freeDays}</strong></p>
+        <p>Liczba dni demurrage: <strong>${dni}</strong></p>
+        <p>Dni przekroczone: <strong>${przekroczone}</strong></p>
+        <table>
+          <thead>
+            <tr><th>Od</th><th>Do</th><th>Liczba dni</th><th>Stawka za dzień</th><th>Kwota</th></tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
+        <p style="font-weight:bold; margin-top: 10px;">Łączny koszt demurrage: ${koszt} EUR</p>
+      `;
+    }
+
+// Ukryj wynik po każdej zmianie dat
+document.getElementById("d_start").addEventListener("change", () => {
+  document.getElementById("result_demurrage").innerHTML = "";
+});
+document.getElementById("d_end").addEventListener("change", () => {
+  document.getElementById("result_demurrage").innerHTML = "";
+})
+
+const detentionPricing = {
+  EVERGREEN: {
+    freeDays: 3,
+    Gdansk: {
+      "20DRY": { rates: [ { from: 4, to: 10, rate: 20 }, { from: 11, to: 17, rate: 35 }, { from: 18, to: Infinity, rate: 50 } ] },
+      "40DRY": { rates: [ { from: 4, to: 10, rate: 40 }, { from: 11, to: 17, rate: 70 }, { from: 18, to: Infinity, rate: 100 } ] }
+    },
+    Gdynia: {
+      "20DRY": { rates: [ { from: 4, to: 10, rate: 20 }, { from: 11, to: 17, rate: 35 }, { from: 18, to: Infinity, rate: 50 } ] },
+      "40DRY": { rates: [ { from: 4, to: 10, rate: 40 }, { from: 11, to: 17, rate: 70 }, { from: 18, to: Infinity, rate: 100 } ] }
+    }
+  },
+  HAPAG: {
+    freeDays: 7,
+    Gdansk: {
+      "20DRY": { rates: [ { from: 8, to: 9, rate: 35 }, { from: 10, to: 17, rate: 70 }, { from: 18, to: Infinity, rate: 80 } ] },
+      "40DRY": { rates: [ { from: 8, to: 9, rate: 50 }, { from: 10, to: 17, rate: 80 }, { from: 18, to: Infinity, rate: 100 } ] }
+    },
+    Gdynia: {
+      "20DRY": { rates: [ { from: 8, to: 9, rate: 35 }, { from: 10, to: 17, rate: 70 }, { from: 18, to: Infinity, rate: 80 } ] },
+      "40DRY": { rates: [ { from: 8, to: 9, rate: 50 }, { from: 10, to: 17, rate: 80 }, { from: 18, to: Infinity, rate: 100 } ] }
+    }
+  },
+  MAERSK: {
+    freeDays: 3,
+    Gdansk: {
+      "20DRY": { rates: [ { from: 4, to: 10, rate: 50 }, { from: 11, to: 17, rate: 75 }, { from: 18, to: Infinity, rate: 100 } ] },
+      "40DRY": { rates: [ { from: 4, to: 10, rate: 70 }, { from: 11, to: 17, rate: 100 }, { from: 18, to: Infinity, rate: 125 } ] }
+    },
+    Gdynia: {
+      "20DRY": { rates: [ { from: 4, to: 10, rate: 50 }, { from: 11, to: 17, rate: 75 }, { from: 18, to: Infinity, rate: 100 } ] },
+      "40DRY": { rates: [ { from: 4, to: 10, rate: 70 }, { from: 11, to: 17, rate: 100 }, { from: 18, to: Infinity, rate: 125 } ] }
+    }
+  },
+  ONE: {
+    freeDays: 7,
+    Gdansk: {
+      "20DRY": { rates: [ { from: 8, to: 14, rate: 26 }, { from: 15, to: Infinity, rate: 42 } ] },
+      "40DRY": { rates: [ { from: 8, to: 14, rate: 42 }, { from: 15, to: Infinity, rate: 73 } ] }
+    },
+    Gdynia: {
+      "20DRY": { rates: [ { from: 8, to: 14, rate: 26 }, { from: 15, to: Infinity, rate: 42 } ] },
+      "40DRY": { rates: [ { from: 8, to: 14, rate: 42 }, { from: 15, to: Infinity, rate: 73 } ] }
+    }
+  },
+  YANG: {
+    freeDays: 7,
+    Gdansk: {
+      "20DRY": { rates: [ { from: 8, to: 10, rate: 35 }, { from: 11, to: Infinity, rate: 45 } ] },
+      "40DRY": { rates: [ { from: 8, to: 10, rate: 45 }, { from: 11, to: Infinity, rate: 55 } ] }
+    },
+    Gdynia: {
+      "20DRY": { rates: [ { from: 8, to: 10, rate: 35 }, { from: 11, to: Infinity, rate: 45 } ] },
+      "40DRY": { rates: [ { from: 8, to: 10, rate: 45 }, { from: 11, to: Infinity, rate: 55 } ] }
+    }
+  }
+};
+
+function obliczDetention() {
+  const armator = document.getElementById("armator").value;
+  const port = document.getElementById("t_port").value;
+  const typ = document.getElementById("t_type").value;
+  const start = new Date(document.getElementById("t_start").value);
+  const end = new Date(document.getElementById("t_end").value);
+
+  const resultBox = document.getElementById("result_detention");
+  resultBox.innerHTML = "";
+
+  if (!start || !end || isNaN(start) || isNaN(end) || end < start) {
+    resultBox.innerHTML = `<p style='color: red;'>Wprowadź poprawne daty.</p>`;
+    return;
+  }
+
+  const dni = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+
+  const detentionData = detentionPricing[armator];
+  if (!detentionData) {
+    resultBox.innerHTML = `<p style='color: red;'>Brak danych dla wybranego armatora.</p>`;
+    return;
+  }
+
+  const freeDays = detentionData.freeDays || 0;
+  const pricing = detentionData[port]?.[typ];
+  if (!pricing) {
+    resultBox.innerHTML = `<p style='color: red;'>Brak danych do wyliczeń dla wybranego portu lub typu kontenera.</p>`;
+    return;
+  }
+
+  const przekroczone = Math.max(0, dni - freeDays);
+  let koszt = 0;
+  let rows = "";
+
+  pricing.rates.forEach(rate => {
+    const startDay = Math.max(rate.from, freeDays + 1);
+    const endDay = Math.min(rate.to, freeDays + przekroczone);
+    const daysInRange = Math.max(0, endDay - startDay + 1);
+    if (daysInRange > 0) {
+      const startDate = new Date(start);
+      startDate.setDate(startDate.getDate() + (startDay - 1));
+      const endDate = new Date(start);
+      endDate.setDate(endDate.getDate() + (endDay - 1));
+
+      const formatDate = d => d.toLocaleDateString("pl-PL");
+      const subtotal = daysInRange * rate.rate;
+      koszt += subtotal;
+
+      rows += `<tr>
+        <td>${formatDate(startDate)}</td>
+        <td>${formatDate(endDate)}</td>
+        <td>${daysInRange}</td>
+        <td>${rate.rate} EUR</td>
+        <td>${subtotal} EUR</td>
+      </tr>`;
+    }
+  });
+
+  resultBox.innerHTML = `
+    <p>Dni wolne detention u tego armatora: <strong>${freeDays}</strong></p>
+    <p>Liczba dni detention: <strong>${dni}</strong></p>
+    <p>Dni przekroczone: <strong>${przekroczone}</strong></p>
+    <table>
+      <thead>
+        <tr><th>Od</th><th>Do</th><th>Liczba dni</th><th>Stawka za dzień</th><th>Kwota</th></tr>
+      </thead>
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>
+    <p style="font-weight:bold; margin-top: 10px;">Łączny koszt detention: ${koszt} EUR</p>
+  `;
+}
+
+// Reset wyników detention po zmianie dat
+document.getElementById("t_start").addEventListener("change", () => {
+  document.getElementById("result_detention").innerHTML = "";
+});
+document.getElementById("t_end").addEventListener("change", () => {
+  document.getElementById("result_detention").innerHTML = "";
+});
+
+
+
+
+  </script>
+</body>
+</html>
