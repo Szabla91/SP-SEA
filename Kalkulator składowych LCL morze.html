@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Kalkulator Składowania Towaru Drobnicowego - Morze</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+    .btn-back {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      padding: 8px 16px;
+      background-color: #be1e2d;
+      color: white;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      z-index: 1000;
+      border: none;
+    }
+    .btn-back:hover {
+      background-color: #a31520;
+    }
+    .page-content {
+      padding: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #be1e2d;
+      border-bottom: 2px solid #be1e2d;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+      font-size: 2.3rem;
+      text-align: center;
+      font-weight: 700;
+    }
+    .section {
+      background-color: #fafbfc;
+      margin-bottom: 30px;
+      border: 1.5px solid #e5e5e5;
+      padding: 28px 24px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: 500;
+      color: #222;
+    }
+    select, input[type="date"], input[type="number"] {
+      padding: 7px 12px;
+      border: 1.5px solid #ccc;
+      border-radius: 7px;
+      width: 100%;
+      max-width: 340px;
+      margin-top: 5px;
+      font-size: 1rem;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    button {
+      margin-top: 25px;
+      padding: 12px 28px;
+      background-color: #be1e2d;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.04rem;
+      transition: background-color 0.22s;
+      letter-spacing: 0.03em;
+    }
+    button:hover {
+      background-color: #a31520;
+    }
+    #result_storage {
+      margin-top: 26px;
+      border-top: 1px solid #ddd;
+      padding-top: 18px;
+      color: #222;
+      font-size: 1.06rem;
+    }
+    @media (max-width: 700px) {
+      .page-content { padding: 15px; }
+      .section { padding: 16px 5px; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="Baza wiedzy morze.html" class="btn-back">← Powrót do ekranu głównego</a>
+
+<div class="page-content">
+  <h1>Kalkulator Składowania Drobnicy - Morze</h1>
+
+  <div class="section">
+    <!-- Wybór agenta -->
+    <label for="agent">Wybierz agenta dekonsolidacyjnego:</label>
+    <select id="agent">
+      <option value="">Wybierz agenta</option>
+      <option value="Shipco Transport">Shipco Transport</option>
+      <option value="Euroconsol">Euroconsol</option>
+      <option value="Greencarrier">Greencarrier</option>
+    </select>
+
+    <!-- Sekcja wyboru kraju -->
+    <label for="country" style="margin-top:20px;">Wybierz kraj destynacji:</label>
+    <select id="country">
+      <option value="">Wybierz kraj</option>
+      <option value="Polska">Polska</option>
+      <option value="Niemcy">Niemcy</option>
+    </select>
+
+    <!-- Pole ilości W/M -->
+    <label id="wm-label" style="margin-top:20px;">
+      Ilość W/M (waga/miara):
+      <input type="number" id="wm" min="0" step="0.01" placeholder="np. 12.50" />
+    </label>
+
+    <label style="margin-top:20px;">Data rozładunku towaru na magazynie:
+      <input type="date" id="unload_date" />
+    </label>
+
+    <label>Data odbioru towaru z magazynu:
+      <input type="date" id="pickup_date" />
+    </label>
+
+    <button type="button" onclick="calculateStorage()">Oblicz koszty składowania</button>
+
+    <div id="result_storage"></div>
+  </div>
+</div>
+
+<script>
+// Dane cennikowe dla agentów (Morze)
+const morzePricing = {
+  "Shipco Transport": {
+    "Polska": {
+      freeDays: 7, 
+      secondWeekRate: 17, 
+      thirdWeekRate: 23,
+      minCost: 85
+    },
+    "Niemcy": {
+      freeDays: 5, 
+      next4DaysRate: 9, 
+      additionalDaysRate: 17,
+      minCost: 85
+    },
+  },
+  "Euroconsol": {
+    "Polska": {
+      freeDays: 5,
+      dailyRate: 3,
+      minCost: 0
+    },
+    "Niemcy": {
+      freeDays: 3,
+      dailyRateGermany: 8,
+      minCost: 0
+    },
+  },
+  "Greencarrier": {
+    "Polska": {
+      freeDays: 7,
+      day7to14Rate: 20,
+      above14DaysRate: 22,
+      minCost: 50
+    },
+    "Niemcy": {
+      freeDays: 3,
+      day4to10Rate: 20,
+      above10DaysRate: 12,
+      minCost: 20
+    },
+  },
+};
+
+
+// Funkcja liczenia składowego
+function calculateStorage() {
+  const agent = document.getElementById('agent').value;
+  const country = document.getElementById('country').value;
+  const unloadDate = new Date(document.getElementById('unload_date').value);
+  const pickupDate = new Date(document.getElementById('pickup_date').value);
+  const wm = parseFloat(document.getElementById('wm').value);  // W/M
+  const resultBox = document.getElementById('result_storage');
+  resultBox.innerHTML = ''; // Resetujemy wynik przed każdym nowym obliczeniem
+
+  // Walidacja danych
+  let errorMessage = '';
+
+  // Sprawdzamy, czy agent, kraj, W/M i daty zostały poprawnie wybrane
+  if (!agent && !country && (isNaN(wm) || wm <= 0) && !unloadDate && !pickupDate) {
+    errorMessage = 'Proszę wybrać agenta, kraj, wprowadzić poprawną ilość W/M (większą niż 0) oraz wybrać daty rozładunku i odbioru.';
+  } else {
+    if (!agent) {
+      errorMessage += 'Proszę wybrać agenta. ';
+    }
+    if (!country) {
+      errorMessage += 'Proszę wybrać kraj. ';
+    }
+    if (isNaN(wm) || wm <= 0) {
+      errorMessage += 'Proszę wprowadzić poprawną ilość W/M (większą niż 0). ';
+    }
+
+    // Sprawdzamy, czy daty są poprawnie wprowadzone (nie "Invalid Date")
+    if (unloadDate == "Invalid Date" || pickupDate == "Invalid Date") {
+      errorMessage += 'Proszę wybrać prawidłowe daty rozładunku i odbioru. ';
+    }
+
+    // Sprawdzanie, czy data odbioru jest późniejsza niż data rozładunku
+    if (unloadDate && pickupDate && pickupDate < unloadDate) {
+      errorMessage += 'Data odbioru nie może być wcześniejsza niż data rozładunku. ';
+    }
+  }
+
+  // Jeśli wystąpiły błędy, wyświetlamy komunikat
+  if (errorMessage) {
+    resultBox.innerHTML = `<p style="color: red;">${errorMessage}</p>`;
+    return;
+  }
+
+  const daysInStorage = Math.round((pickupDate - unloadDate) / (24 * 60 * 60 * 1000)) + 1;
+
+  const agentPricing = morzePricing[agent]?.[country];
+  if (!agentPricing) {
+    resultBox.innerHTML = '<p style="color: red;">Brak danych cennikowych dla wybranego agenta i kraju.</p>';
+    return;
+  }
+
+  const freeDays = agentPricing.freeDays;
+  const exceededDays = Math.max(0, daysInStorage - freeDays);
+  let rate = 0;
+  let currency = '';
+
+  // Rozróżnienie walut i stawek dla każdego agenta
+  if (agent === "Shipco Transport") {
+    if (country === "Polska") {
+      rate = agentPricing.secondWeekRate;
+      currency = "PLN";
+    } else if (country === "Niemcy") {
+      rate = agentPricing.thirdWeekRate;
+      currency = "EUR";
+    }
+  } else if (agent === "Euroconsol") {
+    rate = agentPricing.dailyRate;
+    currency = "EUR";
+  } else if (agent === "Greencarrier") {
+    if (country === "Polska") {
+      rate = agentPricing.day7to14Rate;
+      currency = "PLN";
+    } else if (country === "Niemcy") {
+      rate = agentPricing.above14DaysRate;
+      currency = "USD";
+    }
+  }
+
+  // Obliczenia kosztu
+  let totalCost = exceededDays * rate * wm;
+  if (totalCost < agentPricing.minCost && exceededDays > 0) {
+    totalCost = agentPricing.minCost;
+  }
+
+  // Wynik w wybranym formacie
+  resultBox.innerHTML = `
+    <p><strong>Gałąź transportu:</strong> Morze</p>
+    <p><strong>Agent drobnicowy:</strong> ${agent}</p>
+    <p><strong>Kraj:</strong> ${country}</p>
+    <p><strong>Okres składowania:</strong> ${unloadDate.toLocaleDateString('pl-PL')} – ${pickupDate.toLocaleDateString('pl-PL')}</p>
+    <p><strong>Dni wolne:</strong> ${freeDays}</p>
+    <p><strong>Przekroczone dni:</strong> ${exceededDays}</p>
+    <p><strong>Stawka za dzień:</strong> ${rate} ${currency}/w/m</p>
+    <p><strong>Minimalna stawka całkowita:</strong> ${agentPricing.minCost} ${currency}/w/m</p>
+    <p><strong><b>Łączny koszt:</b> <span style="color:#be1e2d;">${totalCost.toFixed(2)} ${currency}</span></strong></p>
+  `;
+}
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
