@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <title>Baza Wiedzy – Transport Morski</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff;
+      color: #333;
+    }
+
+    h1 {
+      color: #be1e2d;
+      border-bottom: 2px solid #be1e2d;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #be1e2d;
+      margin-top: 0;
+    }
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+.intro {
+  margin-top: -80px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.intro h1,
+.intro p {
+  color: #be1e2d;
+}
+    .intro p {
+      font-size: 1.5rem;
+      color: #555;
+    }
+
+.option-card {
+  background: #fafbfc;
+  color: #be1e2d;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  padding: 36px 32px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition:
+    background 0.22s,
+    box-shadow 0.22s,
+    border-color 0.22s,
+    color 0.18s;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1.18rem;
+  min-height: 100px;
+}
+
+.option-card:hover, .option-card:focus {
+  background: #f1f3f5;
+  border-color: #cccccc;
+  color: #be1e2d;
+  box-shadow: 0 4px 24px rgba(190,30,45,0.09);
+  text-decoration: none;
+}
+.option-card h2,
+.option-card p,
+.option-card .hint {
+  color: #be1e2d;
+  text-decoration: none !important;
+  margin: 0 0 0.3em 0;
+}
+.option-card .hint {
+  color: #888;
+  margin-top: 16px;
+  font-size: 0.96rem;
+  font-style: italic;
+  text-align: center;
+  opacity: 0.88;
+}
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 30px;
+}
+
+    footer {
+      max-width: 900px;
+      margin: 60px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid #d0d0d0;
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+    }
+
+    /* Responsywność */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+      nav ul {
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="bbats_logo.png" alt="BBATS Logo" style="height: 80px;" />
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <h1>Baza Wiedzy Transportu Morskiego</h1>
+    <p>Znajdziesz tutaj wszystkie niezbędne informacje i narzędzia do sprawnej organizacji transportu morskiego.
+    </br>Kliknij w interesujący Cię kafelek aby przejśc dalej.</p>
+  </section>
+
+  <section class="options-grid">
+
+    <a class="option-card" href="Kalkulator dem-det.html" id="kalkulator">
+      <h2>Kalkulator Demurrage / Detention</h2>
+      <p>Szybko obliczysz koszty demurrage i detention</p>
+    </a>
+
+<a class="option-card" href="Kalkulator składowych LCL.html">
+  <h2>Kalkulator składowania drobnicy</h2>
+  <p>Szybko sprawdzisz koszt składowania w magazynach LCL</p>
+</a>
+
+
+    <a class="option-card" href="Zasady zwolnien.html" id="Zasady">
+      <h2>Zasady zwolnień kontenerów w imporcie</h2>
+      <p>Informacje w jaki sposób dany armator zwalnia kontener</p>
+    </a>
+
+    <a class="option-card" href="kontakty.html" id="kontakty">
+      <h2>Kontakty</h2>
+      <p>Dane kontaktowe do armatorów oraz innych partnerów</p>
+    </a>
+
+<a class="option-card" href="https://bbats.sharepoint.com/:f:/r/sites/BBATRANSPORTSYSTEM/Shared%20Documents/DMLK/BAZA%20WIEDZY/INSTRUKCJE/INSTRUKCJE%20SEA?csf=1&web=1&e=0ShWPU" id="instrukcje" target="_blank">
+  <h2>Instrukcje</h2>
+  <p>Praktyczne instrukcje dotyczące procesów transportowych</p>
+</a>
+
+<a class="option-card" href="https://bbats.sharepoint.com/:f:/r/sites/BBATRANSPORTSYSTEM/Shared%20Documents/DMLK/BAZA%20WIEDZY/WZORY%20DOKUMENT%C3%93W/WZORY%20SEA?csf=1&web=1&e=iyc13l" id="wzory" target="_blank">
+  <h2>Wzory dokumentów</h2>
+  <p>Wzory najważniejszych dokumentów transportowych do pobrania</p>
+</a>
+
+    <a class="option-card" href="slownik.html" id="slownik">
+      <h2>Słownik pojęć</h2>
+      <p>Wyjaśnienia branżowych terminów i pojęć logistycznych w transporcie morskim</p>
+    </a>
+
+    <a class="option-card" href="Taryfy portowe.html" id="taryfy">
+      <h2>Taryfy portowe</h2>
+      <p>Aktualne taryfy portowe</p>
+    </a>
+
+<a class="option-card" href="link" id="procesy" target="_blank">
+      <h2>Procesy Transportowe</h2>
+      <p>Szczegółowe procedury importu i eksportu morskiego krok po kroku</p>
+    </a>
+
+    <a class="option-card" href="Przydatne linki.html" id="linki">
+      <h2>Linki zewnętrzne</h2>
+      <p>Przydatne odnośniki do systemów portowych, przydatnych portali oraz innych narzędzi</p>
+    </a>
+
+  </section>
+</main>
+
+
+</body>
+</html>

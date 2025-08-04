@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Słownik pojęć – TSL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff;
+      color: #be1e2d;
+    }
+.btn-back {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 8px 16px;
+  background-color: #be1e2d;
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+}
+
+.btn-back:hover {
+  background-color: #a31520;
+}
+    .page-content {
+      padding: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #be1e2d;
+      border-bottom: 2px solid #be1e2d;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+      text-align: center;
+    }
+    .alphabet-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 6px;
+    }
+
+.alphabet-nav a {
+  display: inline-block;
+  padding: 8px 12px;
+  border: 2px solid #be1e2d;
+  color: #be1e2d;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s, color 0.3s;
+}
+.alphabet-nav a:hover,
+.alphabet-nav a:focus {
+  background-color: #be1e2d;
+  color: #fff;
+  text-decoration: none;
+}
+    .term-group {
+      margin-bottom: 40px;
+    }
+    .term-group h2 {
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
+      margin-top: 30px;
+      color: #be1e2d;
+    }
+.term {
+  margin-bottom: 24px;
+  padding: 18px 22px;
+  background: #fafbfc;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px 0 rgba(180, 180, 180, 0.10);
+  border: 1px solid #e5e5e5;
+  transition: box-shadow 0.2s;
+}
+.term strong {
+  font-size: 1.15rem;
+  color: #be1e2d;
+}
+.term:hover {
+  box-shadow: 0 4px 18px 0 rgba(180, 180, 180, 0.18);
+}
+
+
+.alphabet-nav {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 99;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+mark {
+  background: #ffe0e0;
+  color: #d10000;
+  padding: 0 2px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+  </style>
+</head>
+<body>
+
+<a href="Baza wiedzy morze.html" class="btn-back">← Powrót do ekranu głównego</a>
+
+<div class="page-content">
+  <h1>Słownik pojęć – TSL</h1>
+  <div class="alphabet-nav">
+    <a href="#A">A</a><a href="#B">B</a><a href="#C">C</a><a href="#D">D</a><a href="#E">E</a>
+    <a href="#F">F</a><a href="#G">G</a><a href="#H">H</a><a href="#I">I</a><a href="#J">J</a>
+    <a href="#K">K</a><a href="#L">L</a><a href="#M">M</a><a href="#N">N</a><a href="#O">O</a>
+    <a href="#P">P</a><a href="#Q">Q</a><a href="#R">R</a><a href="#S">S</a><a href="#T">T</a>
+    <a href="#U">U</a><a href="#V">V</a><a href="#W">W</a><a href="#X">X</a><a href="#Y">Y</a>
+    <a href="#Z">Z</a>
+  </div>
+
+<!-- WYSZUKIWARKA -->
+<div style="max-width:400px;margin:0 auto 30px;">
+  <input type="text" id="searchBox" placeholder="Wpisz szukane pojęcie lub fragment..." style="width:100%;padding:12px 14px;font-size:1rem;border-radius:8px;border:1.5px solid #ccc;box-sizing:border-box;">
+</div>
+
+
+  <!-- Sekcja A -->
+  <div class="term-group" id="A">
+    <h2>A</h2>
+    <div class="term"><strong>AMS (Automated Manifest System)</strong><p>Automatyczny system zgłaszania danych przy eksporcie do USA.</p></div>
+    <div class="term"><strong>Armator</strong><p>To osoba lub firma, która jest właścicielem statku lub kilku jednostek pływających, które przeznaczone są do przewozu towarów bądź pasażerów. Armator odpowiada za wszystkie sprawy związane z eksploatacją statków, w tym zarządzanie załogą, utrzymanie jednostek w dobrym stanie technicznym oraz zapewnienie przestrzegania wszelkich przepisów międzynarodowych. To on odpowiada także za organizację procesu przewozu oraz za współpracę z portami i innymi podmiotami związanymi z logistyką morską.</p></div>
+    <div class="term"><strong>ATA (Actual Time of Arrival)</strong><p>Aktualny czas przyjazdu / przypłynięcia / przylotu.</p></div>
+    <div class="term"><strong>ATD (Actual Time of Departure)</strong><p>Aktualny czas wyjazdu / wypłynięcia / wylotu.</p></div>
+  </div>
+
+  <!-- Sekcja B -->
+  <div class="term-group" id="B">
+    <h2>B</h2>
+    <div class="term"><strong>BL (Bill of Lading)</strong><p>Konosament, morski list przewozowy.</p></div>
+  </div>
+
+  <!-- Sekcja C -->
+  <div class="term-group" id="C">
+    <h2>C</h2>
+    <div class="term"><strong>CBM (Cubic Metre)</strong><p>Jednostka miary oznaczająca metry sześcienne.</p></div>
+    <div class="term"><strong>CFS (Container Freight Station)</strong><p>Podczas eksportu: baza, w której przyjmuje się od klientów ładunki mniejsze od kontenera (LCL) w celu upakowania ich w kontenerach. W przypadku importu jest to miejsce gdzie ładunki są wypakowywane z kontenerów i następnie dostarczane klientom.</p></div>
+    <div class="term"><strong>COC (Carriers Owned Containers)</strong><p>Kontener będący własnością przewoźnika.</p></div>
+    <div class="term"><strong>CY (Container Yard)</strong><p>Terminal kontenerowy – miejsce załadunku kontenerów na statek.</p></div>
+  </div>
+
+  <!-- Sekcja D -->
+  <div class="term-group" id="D">
+    <h2>D</h2>
+    <div class="term"><strong>D2D (Door to Door)</strong><p>Termin określający pełną obsługę spedycyjną, od momentu odebrania towaru u nadawcy, aż do dostarczenia towaru odbiorcy. Usługa w trybie D2D obejmuje wypełnienie wszystkich niezbędnych formalności przez spedytora.</p></div>
+    <div class="term"><strong>Demurrage (DEM)</strong><p>Opłata dotycząca przetrzymania kontenera na terenie terminala kontenerowego. Obejmuje okres po upływie czasu wolnego do podjęcia kontenera z portu.</p></div>
+    <div class="term"><strong>Depot</strong><p>Magazyn, miejsce składowania kontenerów.</p></div>
+    <div class="term"><strong>Detention (DET)</strong><p>Opłata dotycząca przekroczenia kontenera poza terenem terminala kontenerowego. Obejmuje okres od momentu podjęcia do zdania pustego kontenera do portu.</p></div>
+    <div class="term"><strong>DTHC (Destination THC)</strong><p>Koszty portowe w porcie wyładunku.</p></div>
+  </div>
+
+  <!-- Sekcja E -->
+  <div class="term-group" id="E">
+    <h2>E</h2>
+    <div class="term"><strong>ETA (Estimated Time of Arrival)</strong><p>Przybliżony czas przyjazdu / przypłynięcia / przylotu.</p></div>
+    <div class="term"><strong>ETD (Estimated Time of Departure)</strong><p>Przybliżony czas wyjazdu / wypłynięcia / wylotu.</p></div>
+  </div>
+
+  <!-- Sekcja F -->
+  <div class="term-group" id="F">
+    <h2>F</h2>
+    <div class="term"><strong>FCL (Full Container Load)</strong><p>Przesyłka pełnokontenerowa, gdy jeden klient wykupuje całą pojemność kontenera dla swojego towaru.</p></div>
+    <div class="term"><strong>FCR (Forwarder's Certificate of Receipt)</strong><p>Spedytorskie zaświadczenie przyjęcia towaru. Jest to bardzo ważny dokument, który potwierdza, że towar został przekazany przez dostawcę spedytorowi.</p></div>
+    <div class="term"><strong>Feeder</strong><p>Statek przewożący ładunki na krótkich dystansach (np. w relacji Hamburg – Gdynia).</p></div>
+    <div class="term"><strong>FEU (Forty Feet Equivalent Unit)</strong><p>Jednostka pojemności równoważna objętości kontenera o długości 40 stóp.</p></div>
+    <div class="term"><strong>FT/FTR (Flatrack)</strong><p>Płaskie platformy do przewozu ponadgabarytów, czyli ładunków out of gauge (OOG).</p></div>
+    <div class="term"><strong>FTL (Full Truck Load)</strong><p>Pełny załadunek, przesyłki całopojazdowe – ładunek zajmuje całą powierzchnię ciężarówki lub naczepy.</p></div>
+    <div class="term"><strong>Fumigacja</strong><p>Proces dezynfekcji, który polega na narażeniu przedmiotów na działanie gazów lub par o właściwościach bakteriobójczych, grzybobójczych lub owadobójczych. Stosowana głównie w celu zwalczania szkodników i ochrony ładunków.</p></div>
+  </div>
+
+  <!-- Sekcja H -->
+  <div class="term-group" id="H">
+    <h2>H</h2>
+    <div class="term"><strong>HBL (House Bill of Lading)</strong><p>Konosament spedytorski, który został wydany przez spedytora.</p></div>
+    <div class="term"><strong>HC (High Cube Container)</strong><p>Kontener wysoki o wymiarach 8′ x 9,5′ x 40′.</p></div>
+  </div>
+
+  <!-- Sekcja I -->
+  <div class="term-group" id="I">
+    <h2>I</h2>
+    <div class="term"><strong>IMDG (International Maritime Dangerous Goods)</strong><p>Międzynarodowy kodeks morskich towarów niebezpiecznych, zawiera przepisy dotyczące bezpiecznego przewozu niebezpiecznych towarów drogą morską.</p></div>
+    <div class="term"><strong>IMO (International Maritime Organization)</strong><p>Międzynarodowa Organizacja Morska, której głównym zadaniem jest bezpieczeństwo żeglugi, ochrona środowiska oraz ułatwienie handlu morskiego.</p></div>
+    <div class="term"><strong>Incoterms</strong><p>Międzynarodowe formuły handlowe opracowane przez Międzynarodową Izbę Handlową w Paryżu, powszechnie używane w handlu zagranicznym.</p></div>
+    <div class="term"><strong>ISF (Importer Security Filing)</strong><p>Obowiązek zgłaszania ISF mają importerzy w USA na podstawie danych podanych przez eksportera.</p></div>
+  </div>
+
+  <!-- Sekcja K -->
+  <div class="term-group" id="K">
+    <h2>K</h2>
+    <div class="term"><strong>Konsolidacja</strong><p>Proces łączenia małych przesyłek, przesyłanych między różnymi dostawcami dla różnych odbiorców, tak aby przetransportować je w jednym kontenerze lub jednym środkiem transportu.</p></div>
+  </div>
+
+  <!-- Sekcja L -->
+  <div class="term-group" id="L">
+    <h2>L</h2>
+    <div class="term"><strong>LCL (Less than Container Load)</strong><p>Mniej niż objętość kontenera – określa przewóz przesyłek drobnicowych.</p></div>
+  </div>
+
+  <!-- Sekcja M -->
+  <div class="term-group" id="M">
+    <h2>M</h2>
+    <div class="term"><strong>MBL (Master Bill of Lading)</strong><p>Dokument główny, wystawiany „fizycznie” przez przewoźnika morskiego (armatora lub jego agenta).</p></div>
+    <div class="term"><strong>MSDS (Material Safety Data Sheet)</strong><p>Karta charakterystyki substancji niebezpiecznej. Zawiera podstawowe dane fizykochemiczne oraz informacje o zagrożeniach i zasadach postępowania.</p></div>
+  </div>
+
+  <!-- Sekcja O -->
+  <div class="term-group" id="O">
+    <h2>O</h2>
+    <div class="term"><strong>OBL (Original Bill of Lading)</strong><p>Oryginalny konosament, którego posiadanie uprawnia do odbioru ładunku w porcie docelowym.</p></div>
+    <div class="term"><strong>OOG (Out of Gauge Container)</strong><p>Oznacza ładunek wykraczający poza obrys kontenera, uwzględniając normy ISO wymiarów kontenerów.</p></div>
+    <div class="term"><strong>OPWS (Ogólne Polskie Warunki Spedycyjne)</strong><p>Ogólne zasady dotyczące stosunków pomiędzy spedytorem a zleceniodawcą.</p></div>
+    <div class="term"><strong>OT (Open Top Container)</strong><p>Kontener, który posiada otwartą górę objętą plandeką, zamiast stałego dachu.</p></div>
+  </div>
+
+  <!-- Sekcja P -->
+  <div class="term-group" id="P">
+    <h2>P</h2>
+    <div class="term"><strong>POD (Proof of Delivery / Port of Discharge)</strong><p>Potwierdzenie dostawy / port wyładunku.</p></div>
+    <div class="term"><strong>POL (Port Of Loading)</strong><p>Port załadunku.</p></div>
+    <div class="term"><strong>Project Cargo</strong><p>Termin używany do opisu krajowego lub międzynarodowego transportu dużych, ciężkich i wartościowych przedmiotów.</p></div>
+  </div>
+
+  <!-- Sekcja R -->
+  <div class="term-group" id="R">
+    <h2>R</h2>
+    <div class="term"><strong>RF (Reefer)</strong><p>Kontener chłodniczy umożliwiający transport ładunków w temperaturze kontrolowanej.</p></div>
+    <div class="term"><strong>RO RO (roll-on/roll-off)</strong><p>System przeładunku poziomego statku, polegający na wtaczaniu i wytaczaniu ładunków przez furty statku.</p></div>
+  </div>
+
+  <!-- Sekcja S -->
+  <div class="term-group" id="S">
+    <h2>S</h2>
+    <div class="term"><strong>SOC (Shipper's Owned Container)</strong><p>Kontener będący własnością nadawcy ładunku, a nie własnością przewoźnika.</p></div>
+    <div class="term"><strong>SPMT (Self-Propelled Modular Transporter)</strong><p>Transporter z platformą o dużym zestawie kół, służy do transportu ponadgabarytów (ładunki do 15 000 ton).</p></div>
+    <div class="term"><strong>Storage</strong><p>Opłata za wykorzystanie powierzchni na terenie terminala kontenerowego lub w magazynie. Opłata ta jest niezależna od opłaty Demurrage oraz Detention.</p></div>
+    <div class="term"><strong>SWB (SeaWaybill)</strong><p>Konosament ekspresowy; wystawiany w jednym egzemplarzu; nie jest wymagana prezentacja oryginału armatorowi / spedytorowi, aby „zwolnił” towar odbiorcy.</p></div>
+  </div>
+
+  <!-- Sekcja T -->
+  <div class="term-group" id="T">
+    <h2>T</h2>
+    <div class="term"><strong>TEU (Twenty Feet Equivalent Unit)</strong><p>Jednostka pojemności używana często w odniesieniu do portów i statków, jest równoważna objętości kontenera o długości 20 stóp.</p></div>
+    <div class="term"><strong>THC (Terminal Handling Charges)</strong><p>Koszty portowe / terminalowe – opłaty związane z przeładunkiem kontenera w porcie, rozformowaniem, złożeniem towaru na magazyn oraz przeładunkiem na samochód; w porcie kraju nadania, jak i przeznaczenia; składają się na tę opłatę różne koszty częściowe za poszczególne operacje wykonywane w portach / na terminalach.</p></div>
+    <div class="term"><strong>Transport intermodalny</strong><p>Transport ładunków wykorzystujący więcej niż jeden rodzaj transportu. Najważniejszą regułą w transporcie intermodalnym jest wykorzystanie tylko jednej jednostki ładunkowej (np. kontenera), bez konieczności przeładunku towaru przy zmianie środka transportu.</p></div>
+    <div class="term"><strong>Transport kombinowany</strong><p>Przewóz rzeczy, podczas którego samochód ciężarowy, przyczepa, naczepa z jednostką ciągnącą lub bez jednostki ciągnącej, nadwozie wymienne lub kontener 20-stopowy lub większy korzysta z drogi w początkowym lub końcowym odcinku przewozu, a na innym odcinku z usługi kolei, żeglugi śródlądowej lub transportu morskiego, przy czym odcinek morski przekracza 100 km w linii prostej.</p></div>
+    <div class="term"><strong>Transport multimodalny</strong><p>Transport ładunków wykorzystujący więcej niż jeden rodzaj transportu. W przypadku transportu multimodalnego możliwa jest zmiana jednostki ładunkowej.</p></div>
+    <div class="term"><strong>TT (Transit Time)</strong><p>Przewidywany czas transportu.</p></div>
+    <div class="term"><strong>TSL</strong><p>Transport – Spedycja – Logistyka. Skrót opisujący branżę transportową w Polsce.</p></div>
+  </div>
+
+  <!-- Sekcja U -->
+  <div class="term-group" id="U">
+    <h2>U</h2>
+    <div class="term"><strong>Ubezpieczenie CARGO</strong><p>Świadczenie ubezpieczeniowe polegające na zapewnieniu finansowej rekompensaty w przypadku powstania szkody w mieniu (towarze) w transporcie zarówno krajowym, jak i międzynarodowym. Mienie objęte jest ubezpieczeniem cargo na całej trasie przewozu, w razie konieczności także w trakcie niezbędnych czynności przeładunkowych i przejściowego składowania podczas zwykłego przebiegu transportu. Ubezpieczenie cargo może obejmować szkodę lub całkowitą utratę towaru w ramach wszystkich gałęzi transportu, tj. morskiego, lotniczego, kolejowego i lądowego.</p></div>
+  </div>
+
+  <!-- Sekcja V -->
+  <div class="term-group" id="V">
+    <h2>V</h2>
+    <div class="term"><strong>VGM kontenera</strong><p>Zweryfikowana masa kontenera.</p></div>
+  </div>
+
+  <!-- Sekcja W -->
+  <div class="term-group" id="W">
+    <h2>W</h2>
+    <div class="term"><strong>W/M – waga/miara</strong><p>Do obliczenia frachtu wybiera się wartość większą – liczbę ton lub metrów sześciennych – i mnoży ją przez podaną stawkę. Jeżeli obliczony fracht jest niższy od stawki minimalnej, należy przyjąć stawkę minimum. Przykładowe przeliczniki: AIR – 1 cbm = 167kg, SEA – 1 cbm = 1000kg, RAIL – 1 cbm = 500kg.</p></div>
+  </div>
+</div>
+
+
+<button id="backToTopBtn" title="Wróć na górę" style="
+  display:none;position:fixed;right:26px;bottom:36px;z-index:1001;
+  background:#ff0000;color:#fff;border:none;border-radius:28px;
+  width:48px;height:48px;box-shadow:0 2px 12px rgba(180,180,180,0.15);
+  cursor:pointer;font-size:1.6rem;transition:background .2s;
+">↑</button>
+
+<a href="mailto:k.szablewski@bbats.pl?subject=Zgłoszenie%20błędu%20lub%20uzupełnienia%20-%20Słownik%20TSL&body=Opisz%20błąd%20lub%20propozycję%20zmiany%3A%0A%0A"
+   id="zglosBladBtn"
+   style="
+    position:fixed;right:26px;bottom:96px;z-index:1002;
+    background:#fff;color:#ff0000;
+    border:2px solid #ff0000;
+    border-radius:28px;
+    width:48px;height:48px;
+    box-shadow:0 2px 12px rgba(180,180,180,0.15);
+    cursor:pointer;font-size:1.3rem;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:600;text-decoration:none;
+    transition:background .2s, color .2s;
+  "title="">
+  <span>✉️</span>
+  <span id="labelZglos" style="
+    display:none;position:absolute;right:56px;bottom:50%;transform:translateY(50%);
+    background:#fff;color:#ff0000;border:2px solid #ff0000;border-radius:8px;
+    font-size:1rem;padding:7px 16px;box-shadow:0 2px 10px rgba(180,0,0,0.07);
+    white-space:nowrap;font-weight:600;
+  ">Zgłoś błąd lub uzupełnienie</span>
+</a>
+
+<script>
+
+  const zgBtn = document.getElementById('zglosBladBtn');
+  const label = document.getElementById('labelZglos');
+  zgBtn.onmouseenter = () => label.style.display = 'block';
+  zgBtn.onmouseleave = () => label.style.display = 'none';
+  zgBtn.onfocus = () => label.style.display = 'block';
+  zgBtn.onblur = () => label.style.display = 'none';
+
+// --- całość JS dokładnie jak miałeś ---
+window.addEventListener("scroll", function() {
+  document.getElementById('backToTopBtn').style.display = window.scrollY > 300 ? "block" : "none";
+});
+document.getElementById('backToTopBtn').onclick = function() {
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+// Funkcja do podświetlania frazy
+function highlight(text, phrase) {
+  if (!phrase) return text;
+  const re = new RegExp('('+phrase.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&')+')', 'gi');
+  return text.replace(re, '<mark>$1</mark>');
+}
+
+document.getElementById('searchBox').addEventListener('input', function() {
+  const val = this.value.trim().toLowerCase();
+  const termGroups = document.querySelectorAll('.term-group');
+  let anyVisible = false;
+
+  termGroups.forEach(function(group) {
+    let visibleInGroup = false;
+    group.querySelectorAll('.term').forEach(function(term) {
+      const strong = term.querySelector('strong');
+      const para = term.querySelector('p');
+      const name = strong.textContent;
+      const desc = para.textContent;
+      if (val === '' || name.toLowerCase().includes(val) || desc.toLowerCase().includes(val)) {
+        term.style.display = '';
+        // Podświetl frazę
+        strong.innerHTML = highlight(name, val);
+        para.innerHTML = highlight(desc, val);
+        visibleInGroup = true;
+      } else {
+        term.style.display = 'none';
+        strong.innerHTML = name; // reset podświetlenia
+        para.innerHTML = desc;
+      }
+    });
+    group.style.display = visibleInGroup ? '' : 'none';
+    if (visibleInGroup) anyVisible = true;
+  });
+
+  // Komunikat „brak wyników”
+  let info = document.getElementById('noResultsInfo');
+  if (!anyVisible) {
+    if (!info) {
+      info = document.createElement('div');
+      info.id = 'noResultsInfo';
+      info.style = 'text-align:center;margin-top:40px;color:#888;font-size:1.1rem;';
+      info.innerText = 'Brak wyników dla podanej frazy.';
+      document.querySelector('.page-content').appendChild(info);
+    }
+  } else if (info) {
+    info.remove();
+  }
+});
+</script>
+</body>
+</html>
