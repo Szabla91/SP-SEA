@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Baza formatek operacyjnych – BBATS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+.btn-back {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 8px 16px;
+  background-color: #be1e2d;
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+  border: none;
+}
+.btn-back:hover {
+  background-color: #a31520;
+}
+.page-content, .panel-wyboru, .formatki-blok {
+  max-width: none !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box;
+}
+
+h1 {
+  color: #be1e2d;
+  border-bottom: 2px solid #be1e2d;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+  font-size: 2.3rem;
+  text-align: center;
+  font-weight: 700;
+}
+.form-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 28px;
+}
+label {
+  font-weight: 600;
+  color: #222;
+  min-width: 90px;
+  margin-bottom: 0;
+}
+select {
+  padding: 7px 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 7px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fff;
+}
+#kopiuj-info {
+  color:#888;
+  font-size:1.01rem;
+  margin-bottom: 6px;
+  margin-top: 6px;
+}
+.panel-wyboru {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: 850px;
+  max-width: 98vw;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px #be1e2d13;
+  padding: 30px 24px 12px 24px;
+  margin-bottom: 30px;
+  border: 1.5px solid #e5e5e5;
+  display: flex;
+  align-items: center; 
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+.panel-wyboru .form-row {
+  margin-bottom: 0;
+  gap: 20px;
+}
+.form-row label {
+  min-width: 110px;
+}
+.formatki-blok {
+  background: #fafbfc;
+  border-radius: 18px;
+  padding: 26px 18px;
+  border: 1.5px solid #e5e5e5;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+.templates-list {
+  display: flex;
+  flex-direction: column;
+align-items: center; 
+  gap: 20px;
+  margin-top: 16px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.templates-list.row {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+  overflow: visible;
+}
+.templates-list.row .template-block {
+  width: 100%;       /* <-- Szerokość kafla w poziomie */
+  min-width: 100px;
+  max-width: 185px;
+  flex: 0 0 380px;
+}
+.template-block {
+  border: 2px solid #be1e2d;
+  border-radius: 15px;
+  background: #fafbfc;
+  box-shadow: 0 2px 6px #be1e2d10;
+  padding: 10px 10px 10px 10px;
+  position: relative;
+  margin: 0;
+  box-sizing: border-box;
+  max-width: 1250px;   /* <-- Maksymalna szerokość kafla w pionie */
+  width: 100%;        /* <-- Ale nie przekroczy max-width */
+}
+.template-header {
+  font-size: 16px;
+  font-weight: 700;
+  color: #be1e2d;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+justify-content: center;
+text-align: center;
+  gap: 8px;
+}
+.template-content {
+  background: #fff;
+  border-radius: 10px;
+  border: 1.5px solid #e3e3e3;
+  padding: 16px 14px;
+  font-size: 12px;
+text-align: center;
+  margin-bottom: 0;
+  min-height: 58px;
+  user-select: all;
+  cursor: pointer;
+}
+@media (max-width: 700px) {
+  .page-content { padding: 10px; }
+  .section { padding: 10px 2px; }
+}
+</style>
+
+</head>
+<body>
+<a href="https://bbats.sharepoint.com/:u:/r/sites/MLK/SitePages/SEA.aspx?csf=1&web=1&e=Jd9NJJ" class="btn-back">Powrót do ekranu głównego</a>
+<div class="page-content">
+<div class="panel-wyboru">
+<h1>Baza formatek operacyjnych SEA</h1>
+  <div class="form-row">
+<label for="typ">Typ:</label>
+<select id="typ" onchange="renderTemplates()">
+  <option value="FCL">FCL</option>
+  <option value="LCL">LCL</option>
+</select>
+    <label for="lang">Język formatki:</label>
+    <select id="lang" onchange="renderTemplates()">
+      <option value="pl">Polski</option>
+      <option value="en">Angielski</option>
+    </select>
+    <label for="gender">Rodzaj:</label>
+    <select id="gender" onchange="renderTemplates()">
+      <option value="m">Męski</option>
+      <option value="f">Żeński</option>
+    </select>
+    <label for="view">Widok:</label>
+    <select id="view" onchange="renderTemplates()">
+      <option value="row">Poziomo</option>
+      <option value="column">Pionowo</option>
+    </select>
+  </div>
+  <div id="kopiuj-info"><b>Aby skopiować formatkę: kliknij w pole tekstowe i użyj Ctrl+C</b></div>
+</div>
+<div style="height: 250px;"></div>
+<div class="formatki-blok">
+  <div class="templates-list" id="templates-list"></div>
+</div>
+<script>
+// Przykładowe dane – podmień na swoje szablony
+const templates = [
+  {
+    key: "nowy-klient-ubezpieczenie",
+typ: "ALL",
+    title: { pl: "Nowy klient ubezpieczenie", en: "New client insurance" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nMiło mi z Panem pisać po raz pierwszy.\n\nBędę zajmował się obsługą operacyjną Pana przesyłki i informował na bieżąco o postępach.\n\nZgodnie z wytycznymi ładunek został objęty dodatkowym ubezpieczeniem cargo ALL-RISK.",
+        f: "Dzień dobry,\n\nMiło mi z Panem pisać po raz pierwszy.\n\nBędę zajmowała się obsługą operacyjną Pana przesyłki i informowała na bieżąco o postępach.\n\nZgodnie z wytycznymi ładunek został objęty dodatkowym ubezpieczeniem cargo ALL-RISK."
+      },
+      en: {
+        m: "Good morning,\n\nIt's a pleasure to write to you for the first time.\n\nI will be responsible for operational handling of your shipment and will keep you updated on the progress.\n\nIn accordance with the guidelines, the cargo has been covered by additional ALL-RISK cargo insurance.",
+        f: "Good morning,\n\nIt's a pleasure to write to you for the first time.\n\nI will be responsible for operational handling of your shipment and will keep you updated on the progress.\n\nIn accordance with the guidelines, the cargo has been covered by additional ALL-RISK cargo insurance."
+      }
+    }
+  },
+
+ {
+    key: "nowy-klient-ubezpieczenie-brak-danych",
+typ: "ALL",
+    title: { pl: "Nowy klient ubezpieczenie - brak danych", en: "New client insurance no data" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nMiło mi z Panem pisać po raz pierwszy.\n\nBędę zajmował się obsługą operacyjną Pana przesyłki i informował na bieżąco o postępach.\n\nZgodnie z wytycznymi ładunek ma zostać objęty dodatkowym ubezpieczeniem cargo ALL-RISK, żeby tak się stało potrzebuję od Państwa informacji jaka jest wartość towaru na fakturze oraz co będzie przedmiotem ubezpieczenia. W kolejnym etapie prosimy o przesłanie skanu FV potwierdzającej wartość towaru.",
+        f: "Dzień dobry,\n\nMiło mi z Panem pisać po raz pierwszy.\n\nBędę zajmowała się obsługą operacyjną Pana przesyłki i informowała na bieżąco o postępach.\n\nZgodnie z wytycznymi ładunek ma zostać objęty dodatkowym ubezpieczeniem cargo ALL-RISK, żeby tak się stało potrzebuję od Państwa informacji jaka jest wartość towaru na fakturze oraz co będzie przedmiotem ubezpieczenia. W kolejnym etapie prosimy o przesłanie skanu FV potwierdzającej wartość towaru."
+      },
+      en: {
+        m: "Good morning,\n\nIt's a pleasure to write to you for the first time.\n\nI will be responsible for operational handling of your shipment and will keep you updated on the progress.\n\nAccording to the guidelines, the cargo is to be covered by additional ALL-RISK cargo insurance. To achieve this, I need information from you about the invoice value of the goods and what will be covered by the insurance. In the next step, please send a scan of the invoice confirming the value of the goods.",
+        f: "Good morning,\n\nIt's a pleasure to write to you for the first time.\n\nI will be responsible for operational handling of your shipment and will keep you updated on the progress.\n\nAccording to the guidelines, the cargo is to be covered by additional ALL-RISK cargo insurance. To achieve this, I need information from you about the invoice value of the goods and what will be covered by the insurance. In the next step, please send a scan of the invoice confirming the value of the goods."
+      }
+    }
+  },
+
+  {
+    key: "nowy-klient-brak-ubezpieczenia",
+typ: "ALL",
+    title: { pl: "Nowy klient brak ubezpieczenia", en: "New client no insurance" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nMiło mi z Panem pisać po raz pierwszy.\n\nBędę zajmował się obsługą operacyjną Pana przesyłki i informował na bieżąco o postępach.",
+        f: "Dzień dobry,\n\nMiło mi z Panem pisać po raz pierwszy.\n\nBędę zajmowała się obsługą operacyjną Pana przesyłki i informowała na bieżąco o postępach."
+      },
+      en: {
+        m: "Good morning,\n\nIt's a pleasure to write to you for the first time.\n\nI will be responsible for operational handling of your shipment and will keep you updated on the progress.",
+        f: "Good morning,\n\nIt's a pleasure to write to you for the first time.\n\nI will be responsible for operational handling of your shipment and will keep you updated on the progress."
+      }
+    }
+  },
+
+{
+    key: "Gotowosc-towaru",
+typ: "FCL",
+    title: { pl: "Gotowość towaru", en: "Cargo readiness" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nAgent skontaktował się z załadowcą, towar ma być gotowy <b>08.11</b>\n\nPrzy tej gotowości towaru agent będzie bookował poniższy sailing:\n\nWypłynięcie statku: <b>12.11</b>\n\nPrzypłynięcie statku: <b>29.10</b>\n\nPowrócę z potwierdzeniem bookingu.",
+        f: "Dzień dobry,\n\nAgent skontaktował się z załadowcą, towar ma być gotowy <b>08.11</b>\n\nPrzy tej gotowości towaru agent będzie bookował poniższy sailing:\n\nWypłynięcie statku: <b>12.11</b>\n\nPrzypłynięcie statku: <b>29.10</b>\n\nPowrócę z potwierdzeniem bookingu."
+      },
+      en: {
+        m: "Good morning,\n\nThe agent has contacted the shipper, the goods are expected to be ready on <b>08.11</b>\n\nWith the goods ready, the agent will book the following sailing:\n\nShip departure: <b>12.11</b>\n\nShip arrival: <b>29.10</b>\n\nI will return with booking confirmation.",
+        f: "Good morning,\n\nThe agent has contacted the shipper, the goods are expected to be ready on <b>08.11</b>\n\nWith the goods ready, the agent will book the following sailing:\n\nShip departure: <b>12.11</b>h\n\nShip arrival: <b>29.10</b>\n\nI will return with booking confirmation."
+      }
+    }
+  },
+
+{
+    key: "Gotowosc-towaru",
+typ: "LCL",
+    title: { pl: "Gotowość towaru", en: "Cargo readiness" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nAgent skontaktował się z załadowcą, towar ma być gotowy <b>08.11</b>\n\nPrzy tej gotowości towaru agent będzie bookował poniższy sailing:\n\nWypłynięcie statku: <b>12.11</b>\n\nPrzypłynięcie statku: <b>29.10</b>\n\nPoniżej szczegóły towaru jakie przesłał załadowca agentowi:\n\n\n\nPowrócę z kolejnymi informacjami.",
+        f: "Dzień dobry,\n\nAgent skontaktował się z załadowcą, towar ma być gotowy <b>08.11</b>\n\nPrzy tej gotowości towaru agent będzie bookował poniższy sailing:\n\nWypłynięcie statku: <b>12.11</b>\n\nPrzypłynięcie statku: <b>29.10</b>\n\nPoniżej szczegóły towaru jakie przesłał załadowca agentowi:\n\n\n\nPowrócę z kolejnymi informacjami."
+      },
+      en: {
+        m: "Good morning,\n\nThe agent has contacted the shipper, the goods are expected to be ready on <b>08.11</b>\n\nWith the goods ready, the agent will book the following sailing:\n\nShip departure: <b>12.11</b>\n\nShip arrival: <b>29.10</b>\n\n\n\nI will return with further information.",
+        f: "Good morning,\n\nThe agent has contacted the shipper, the goods are expected to be ready on <b>08.11</b>\n\nWith the goods ready, the agent will book the following sailing:\n\nShip departure: <b>12.11</b>\n\nShip arrival: <b>29.10</b>\n\n\n\nI will return with further information."
+      }
+    }
+  },
+
+{
+    key: "Booking",
+typ: "FCL",
+    title: { pl: "Booking", en: "Booking" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nOtrzymałem potwierdzenie bookingu od agenta, poniżej szczegóły:\n\nWypłynięcie statku zaplanowane zostało na <b>12.11</b>\n\nPrzypłynięcie statku zostało zaplanowane na <b>29.10</b>\n\nPowrócę z kolejnymi informacjami.",
+        f: "Dzień dobry,\n\nOtrzymałam potwierdzenie bookingu od agenta, poniżej szczegóły:\n\nWypłynięcie statku zaplanowane zostało na <b>12.11</b>\n\nPrzypłynięcie statku zostało zaplanowane na <b>29.10</b>\n\nPowrócę z kolejnymi informacjami."
+      },
+      en: {
+        m: "Good morning,\n\nI received a booking confirmation from the agent, below are the details:\n\nThe ship's departure is scheduled for <b>12/11</b>\n\nThe ship's arrival is scheduled for <b>29/10</b>\n\nI will return with further information.",
+        f: "Good morning,\n\nI received a booking confirmation from the agent, below are the details:\n\nThe ship's departure is scheduled for <b>12/11</b>\n\nThe ship's arrival is scheduled for <b>29/10</b>\n\nI will return with further information."
+      }
+    }
+  },
+
+  {
+    key: "draft-BL",
+typ: "LCL",
+    title: { pl: "Draft BL", en: "Draft BL" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nPrzesyłam draft BL.\n\nProszę o sprawdzenie poprawności danych i zwrotne potwierdzenie mailowe.",
+        f: "Dzień dobry,\n\nPrzesyłam draft BL.\n\nProszę o sprawdzenie poprawności danych i zwrotne potwierdzenie mailowe."
+      },
+      en: {
+        m: "Good morning,\n\nI am sending draft of BL.\n\nPlease check the correctness of the data and confirm by mail.",
+        f: "Good morning,\n\nI am sending draft of BL.\n\nPlease check the correctness of the data and confirm by mail."
+      }
+    }
+  },
+
+
+  {
+    key: "zaladunek-kotenera",
+typ: "FCL",
+    title: { pl: "Załadunek kontenera", en: "Container loading" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nKontener został załadowany.\n\nW załączniku przesyłam zdjęcia oraz draft BL. Proszę o sprawdzenie poprawności danych i zwrotne potwierdzenie mailowe.\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie.",
+        f: "Dzień dobry,\n\nKontener został załadowany.\n\nW załączniku przesyłam zdjęcia oraz draft BL. Proszę o sprawdzenie poprawności danych i zwrotne potwierdzenie mailowe.\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie."
+      },
+      en: {
+        m: "Good morning,\n\nThe container has been loaded.\n\nI am attaching photos and a draft BL. Please verify the accuracy of the information and confirm it via email.\n\nI will return with confirmation as soon as the goods have shipped.",
+        f: "Good morning,\n\nThe container has been loaded.\n\nI am attaching photos and a draft BL. Please verify the accuracy of the information and confirm it via email.\n\nI will return with confirmation as soon as the goods have shipped."
+      }
+    }
+  },
+
+ {
+    key: "odbior-towaru",
+typ: "LCL",
+    title: { pl: "Odbiór towaru", en: "Pickup" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nTowar został odebrany. W załączniku przesyłam zdjęcia.\n\nWypłynięcie statku zaplanowane jest na <b>12.11</b>\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie.",
+        f: "Dzień dobry,\n\nTowar został odebrany. W załączniku przesyłam zdjęcia.\n\nWypłynięcie statku zaplanowane jest na <b>12.11</b>\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie."
+      },
+      en: {
+        m: "Good morning,\n\nThe goods have been picked up. I've attached photos.\n\nI will return with confirmation after departure.",
+        f: "Good morning,\n\nThe goods have been picked up. I've attached photos.\n\nI will return with confirmation after departure."
+      }
+    }
+  },
+
+{
+    key: "Update",
+typ: "LCL",
+    title: { pl: "Update", en: "Update" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nOstateczne parametry ładunku to <b>40 CRTS - 900 KG – 5,26 CBM</b>\n\n@ powróci z updatem stawki.",
+        f: "Dzień dobry,\n\nOstateczne parametry ładunku to <b>40 CRTS - 900 KG – 5,26 CBM</b>\n\n@ powróci z updatem stawki."
+      },
+      en: {
+        m: "Good morning,\n\nThe final cargo parameters are <b>40 CRTS - 900 KG - 5.26 CBM</b>\n\n@ will come back with a rate update.",
+        f: "Good morning,\n\nThe final cargo parameters are <b>40 CRTS - 900 KG - 5.26 CBM</b>\n\n@ will come back with a rate update."
+      }
+    }
+  },
+
+{
+    key: "Opoznienie",
+typ: "ALL",
+    title: { pl: "Opóźnione wypłynięcie", en: "Delayed departure" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nOtrzymałem informację od agenta,że statek nie wypłynął dzisiaj zgodnie z planem.\n\nWypłynięcie statku zostało przesunięte na <b>29.07</b>\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie.",
+        f: "Dzień dobry,\n\nOtrzymałam informację od agenta,że statek nie wypłynął dzisiaj zgodnie z planem.\n\nWypłynięcie statku zostało przesunięte na <b>29.07</b>\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie."
+      },
+      en: {
+        m: "Good morning,\n\nI have received information from the agent that the vessel did not sail today as scheduled.\n\nThe vessel's sailing has been postponed to <b>29/07</b>\n\nI will return with confirmation as soon as the cargo sails.",
+        f: "Good morning,\n\nI have received information from the agent that the vessel did not sail today as scheduled.\n\nThe vessel's sailing has been postponed to <b>29/07</b>\n\nI will return with confirmation as soon as the cargo sails."
+      }
+    }
+  },
+
+{
+    key: "Wyplyniecie",
+typ: "FCL",
+    title: { pl: "Wypłynięcie statku", en: "Departure" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nKontener wypłynął statkiem <b>23.07</b>\nPlanowane przypłynięcie do Gdańska: ok. <b>10.09</b>\n\nW załączeniu przesyłam BL - proszę o potwierdzenie poprawności danych.\n\n<b>BARDZO WAŻNE</b> – prosimy o przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi z możliwie największym wyprzedzeniem. Od dnia 31.10.2024 wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.\n\n<b>Po przekroczeniu wolnego terminu obowiązują standardowe opłaty za demurrage, detention oraz storage.</b>",
+        f: "Dzień dobry,\n\nKontener wypłynął statkiem <b>23.07</b>\nPlanowane przypłynięcie do Gdańska: ok. <b>10.09</b>\n\nW załączeniu przesyłam BL - proszę o potwierdzenie poprawności danych.\n\n<b>BARDZO WAŻNE</b> – prosimy o przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi z możliwie największym wyprzedzeniem. Od dnia 31.10.2024 wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.\n\n<b>Po przekroczeniu wolnego terminu obowiązują standardowe opłaty za demurrage, detention oraz storage.</b>"
+      },
+      en: {
+        m: "Good morning,\n\nThe shipment departured on <b>14.04</b>\nPlanned arrival to Hamburg: approx. <b>29.04</b>\n\nAttached I am sending BL - Please confirm the correctness of the data.\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.\n\n<b>Demurrage and detention costs after the free date will be charged according to the shipowner's tariff.</b>",
+        f: "Good morning,\n\nThe shipment departured on <b>14.04</b>\nPlanned arrival to Hamburg: approx. <b>29.04</b>\n\nAttached I am sending BL - Please confirm the correctness of the data.\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.\n\n<b>Demurrage and detention costs after the free date will be charged according to the shipowner's tariff.</b>"
+      }
+    }
+  },
+
+{
+    key: "Wyplyniecie",
+typ: "LCL",
+    title: { pl: "Wypłynięcie statku", en: "Departure" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nKontener wypłynął statkiem <b>23.07</b>\nPlanowane przypłynięcie do Gdańska: ok. <b>10.09</b>\n\nW załączeniu przesyłam BL - proszę o potwierdzenie poprawności danych.\n\n<b>BARDZO WAŻNE</b> – prosimy o przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi z możliwie największym wyprzedzeniem. Od dnia 31.10.2024 wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.\n\n<b>Po przekroczeniu wolnego terminu na magazynie obowiązują standardowe opłaty za  składowanie.</b>",
+        f: "Dzień dobry,\n\nKontener wypłynął statkiem <b>23.07</b>\nPlanowane przypłynięcie do Gdańska: ok. <b>10.09</b>\n\nW załączeniu przesyłam BL - proszę o potwierdzenie poprawności danych.\n\n<b>BARDZO WAŻNE</b> – prosimy o przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi z możliwie największym wyprzedzeniem. Od dnia 31.10.2024 wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.\n\n<b>Po przekroczeniu wolnego terminu na magazynie obowiązują standardowe opłaty za  składowanie.</b>"
+      },
+      en: {
+        m: "Good morning,\n\nThe shipment departured on <b>14.04</b>\nPlanned arrival to Hamburg: approx. <b>29.04</b>\n\nAttached I am sending BL - Please confirm the correctness of the data.\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.\n\n<b>Storage costs beyond the free term will be charged according to the warehouse tariff.</b>",
+        f: "Good morning,\n\nThe shipment departured on <b>14.04</b>\nPlanned arrival to Hamburg: approx. <b>29.04</b>\n\nAttached I am sending BL - Please confirm the correctness of the data.\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.\n\n<b>Storage costs beyond the free term will be charged according to the warehouse tariff.</b>"
+      }
+    }
+  },
+
+{
+    key: "Przypomnienie-o-dokumentach",
+typ: "ALL",
+    title: { pl: "Przypomnienie o dokumentach", en: "Documents reminder" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\n<b>Proszę o pilne przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi.</b> Pod koniec zeszłego roku wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.",
+        f: "Dzień dobry,\n\n<b>Proszę o pilne przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi.</b> Pod koniec zeszłego roku wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera."
+      },
+      en: {
+        m: "Good morning,\n\n<b>Please urgently send your customs clearance documents with the suggested customs codes.</b> At the end of last year, the obligation to provide customs codes for goods before they cross the EU border came into effect. We are obligated to provide these codes to the customs agency before the goods reach Poland; otherwise, you will be charged re-invoiced container demurrage costs.",
+        f: "Good morning,\n\n<b>Please urgently send your customs clearance documents with the suggested customs codes.</b> At the end of last year, the obligation to provide customs codes for goods before they cross the EU border came into effect. We are obligated to provide these codes to the customs agency before the goods reach Poland; otherwise, you will be charged re-invoiced container demurrage costs."
+      }
+    }
+  },
+
+{
+    key: "Opoznione-wplyniecie",
+typ: "ALL",
+    title: { pl: "Opóźnione wpłynięcie", en: "Delayed arrival" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nStatek notuje opóźnienie.\n\nWedług najnowszego trackingu statek ma wpłynąć do portu <b>04.02</b>\n\nPowrócę z kolejnymi informacjami.",
+        f: "Dzień dobry,\n\nStatek notuje opóźnienie.\n\nWedług najnowszego trackingu statek ma wpłynąć do portu <b>04.02</b>\n\nPowrócę z kolejnymi informacjami."
+      },
+      en: {
+        m: "Good morning,\n\nThe ship is experiencing a delay.\n\nAccording to the latest tracking, the vessel is scheduled to arrive at port on <b>04.02</b>\n\nI will return with further information.",
+        f: "Good morning,\n\nThe ship is experiencing a delay.\n\nAccording to the latest tracking, the vessel is scheduled to arrive at port on <b>04.02</b>\n\nI will return with further information."
+      }
+    }
+  },
+
+{
+    key: "Wplyniecie-statku",
+typ: "LCL",
+    title: { pl: "Wpłynięcie statku", en: "Vessel arrival" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nStatek wpłynął dzisiaj do portu.W załączniku przesyłam fakturę transportową.\n\nPowrócę z informacją po rozładunku kontenera na terminalu.",
+        f: "Dzień dobry,\n\nStatek wpłynął dzisiaj do portu.W załączniku przesyłam fakturę transportową.\n\nPowrócę z informacją po rozładunku kontenera na terminalu."
+      },
+      en: {
+        m: "Good morning,\n\nThe ship arrived at the port today. Please find the transport invoice attached. \n\nI will get back to you with more information after the container has been unloaded at the terminal.",
+        f: "Good morning,\n\nThe ship arrived at the port today. Please find the transport invoice attached. \n\nI will get back to you with more information after the container has been unloaded at the terminal."
+      }
+    }
+  },
+
+{
+    key: "Wplyniecie-statku",
+typ: "FCL",
+    title: { pl: "Wpłynięcie statku", en: "Vessel arrival" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nStatek wpłynął dzisiaj do portu, zgłosiłem kontener do odprawy.\n\nW załączniku przesyłam fakturę transportową.\n\nPowrócę z powiadomieniem o należnościach celnych oraz informacją po rozładunku kontenera na terminalu.\n\n<b>Po przekroczeniu wolnego terminu obowiązują standardowe opłaty za demurrage, detention oraz storage według taryfy armatora.</b>",
+        f: "Dzień dobry,\n\nStatek wpłynął dzisiaj do portu, zgłosiłam kontener do odprawy.\n\nW załączniku przesyłam fakturę transportową.\n\nPowrócę z powiadomieniem o należnościach celnych oraz informacją po rozładunku kontenera na terminalu.\n\n<b>Po przekroczeniu wolnego terminu obowiązują standardowe opłaty za demurrage, detention oraz storage według taryfy armatora.</b>"
+      },
+      en: {
+        m: "Good morning,\n\nThe ship entered port today, and I have registered the container for customs clearance.\n\nPlease find attached the transport invoice.\n\nI will return with notification of customs duties and information after the container has been unloaded at the terminal.\n\n<b>After the free period has passed, standard demurrage, detention, and storage fees apply according to the shipowner's tariff.</b>",
+        f: "Good morning,\n\nThe ship entered port today, and I have registered the container for customs clearance.\n\nPlease find attached the transport invoice.\n\nI will return with notification of customs duties and information after the container has been unloaded at the terminal.\n\n<b>After the free period has passed, standard demurrage, detention, and storage fees apply according to the shipowner's tariff.</b>"
+      }
+    }
+  },
+
+{
+    key: "Zaplanowany-rozladunek-LCL",
+typ: "LCL",
+    title: { pl: "Zaplanowany rozładunek LCL", en: "Planned devanning LCL" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nKontener został zdjęty ze statku i jest zaplanowany jest do rozładunku na magazynie jutro.\n\nPowrócę z potwierdzeniem po rozładunku.\n\n<b>Przesyłka ma 3 dni wolnych od składowania, liczone od momentu złożenia przesyłki na magazynie. Po czasie wolnym od składowania opłata wynosi:7 EUR x W/M x dzień. Min. 75 EUR.</b>",
+        f: "Dzień dobry,\n\nKontener został zdjęty ze statku i jest zaplanowany jest do rozładunku na magazynie jutro.\n\nPowrócę z potwierdzeniem po rozładunku.\n\n<b>Przesyłka ma 3 dni wolnych od składowania, liczone od momentu złożenia przesyłki na magazynie. Po czasie wolnym od składowania opłata wynosi:7 EUR x W/M x dzień. Min. 75 EUR.</b>"
+      },
+      en: {
+        m: "Good morning,\n\nThe container has been unloaded from the ship and is scheduled to be unloaded at the warehouse tomorrow.\n\nI will return with confirmation after unloading.\n\n<b>The shipment has 3 days free of storage, counted from the moment the shipment is placed in the warehouse. After the free storage period, the fee is: 7 EUR x W/M x day. Min. 75 EUR.</b>",
+        f: "Good morning,\n\nThe container has been unloaded from the ship and is scheduled to be unloaded at the warehouse tomorrow.\n\nI will return with confirmation after unloading.\n\n<b>The shipment has 3 days free of storage, counted from the moment the shipment is placed in the warehouse. After the free storage period, the fee is: 7 EUR x W/M x day. Min. 75 EUR.</b>"
+      }
+    }
+  },
+
+{
+    key: "Po-rozladunku-LCL",
+typ: "LCL",
+    title: { pl: "Po rozładunku LCL", en: "After devanning LCL" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nKontener został rozładowany, zgłosiłem towar do odprawy.\n\nPowrócę z powiadomieniem o należnościach celno-podatkowych.\n\n<b>Przesyłka ma 3 dni wolnych od składowania, liczone od momentu złożenia przesyłki na magazynie. Po czasie wolnym od składowania opłata wynosi:7 EUR x W/M x dzień. Min. 75 EUR.</b>",
+        f: "Dzień dobry,\n\nKontener został rozładowany, zgłosiłam towar do odprawy.\n\nPowrócę z powiadomieniem o należnościach celno-podatkowych.\n\n<b>Przesyłka ma 3 dni wolnych od składowania, liczone od momentu złożenia przesyłki na magazynie. Po czasie wolnym od składowania opłata wynosi:7 EUR x W/M x dzień. Min. 75 EUR.</b>"
+      },
+      en: {
+        m: "Good morning,\n\nThe container has been unloaded on warehouse and I have registered the container for customs clearance.\n\n<b>The shipment has 3 days free of storage, counted from the moment the shipment is placed in the warehouse. After the free storage period, the fee is: 7 EUR x W/M x day. Min. 75 EUR.</b>",
+        f: "Good morning,\n\nThe container has been unloaded on warehouse and I have registered the container for customs clearance.\n\n<b>The shipment has 3 days free of storage, counted from the moment the shipment is placed in the warehouse. After the free storage period, the fee is: 7 EUR x W/M x day. Min. 75 EUR.</b>"
+      }
+    }
+  },
+
+{
+    key: "Dokumenty-odprawa-celna",
+typ: "ALL",
+    title: { pl: "Dokumenty odprawa celna", en: "Customs clearance documents" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.",
+        f: "Dzień dobry,\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej."
+      },
+             }
+  },
+
+{
+    key: "Dokumenty-T1",
+typ: "ALL",
+    title: { pl: "Dokumenty T1", en: "T1 documents" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n\nDodatkowo będę potrzebował adres agencji celnej która będzie odprawiała towar oraz kod urzędu celnego zamknięcia T1.",
+        f: "Dzień dobry,\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n\nDodatkowo będę potrzebowała adres agencji celnej która będzie odprawiała towar oraz kod urzędu celnego zamknięcia T1."
+      },
+      en: {
+        m: "Good morning,\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.",
+        f: "Good morning,\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods."
+      }
+    }
+  },
+
+{
+    key: "Ostatni-dzien-składowego",
+typ: "LCL",
+    title: { pl: "Ostatni dzień składowego", en: "Last storage day" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nChciałbym poinformować że dzisiaj jest ostatni dzień wolny od składowania. Od jutra składowe będzie liczone <b>X USD/ dzień</b>",
+        f: "Dzień dobry,\n\nChciałabym poinformować że dzisiaj jest ostatni dzień wolny od składowania. Od jutra składowe będzie liczone <b>X USD/ dzień</b>"
+      },
+      en: {
+        m: "Good morning,\n\nI'd like to inform you that today is the last day free from storage. Starting tomorrow, storage will be charged at <b>$X USD/day</b>",
+        f: "Good morning,\n\nI'd like to inform you that today is the last day free from storage. Starting tomorrow, storage will be charged at <b>$X USD/day</b>"
+      }
+    }
+  },
+
+{
+    key: "Ostatni-dzien-demurrage",
+typ: "FCL",
+    title: { pl: "Ostatni dzień demurrage", en: "Last demurrage day" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nChciałbym poinformować że dzisiaj jest ostatni dzień wolny od kosztów demmurage oraz storage. Od jutra koszty będą liczone <b>X USD/ dzień</b>",
+        f: "Dzień dobry,\n\nChciałabym poinformować że dzisiaj jest ostatni dzień wolny od kosztów demmurage oraz storage. Od jutra koszty będą liczone <b>X USD/ dzień</b>"
+      },
+      en: {
+        m: "Good morning,\n\nPlease be advised that today is the last day free from demurrage and storage costs. Starting tomorrow, the costs will be <b>$X USD/day</b>",
+        f: "Good morning,\n\nPlease be advised that today is the last day free from demurrage and storage costs. Starting tomorrow, the costs will be <b>$X USD/day</b>"
+      }
+    }
+  },
+
+{
+    key: "Naleznosci-celne-RUSAK",
+typ: "ALL",
+    title: { pl: "Należności celne RUSAK", en: "Customs duties" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nW załączniku przesyłam SAD roboczy oraz notę za należności celno-podatkowe. Jeżeli nie mają Państwo zastrzeżeń do SADu, poprosimy o przesłanie potwierdzenia przelewu.\n <b>Agencja Celna będzie mogła zgłosić odprawę do Urzędu po zaksięgowaniu środków na koncie.</b>W celu przyspieszenia odprawy, mogą Państwo wysłać płatność przelewem ekspresowym.",
+        f: "Dzień dobry,\n\nW załączniku przesyłam SAD roboczy oraz notę za należności celno-podatkowe. Jeżeli nie mają Państwo zastrzeżeń do SADu, poprosimy o przesłanie potwierdzenia przelewu.\n <b>Agencja Celna będzie mogła zgłosić odprawę do Urzędu po zaksięgowaniu środków na koncie.</b>W celu przyspieszenia odprawy, mogą Państwo wysłać płatność przelewem ekspresowym."
+      },
+     
+    }
+  },
+
+
+{
+    key: "Naleznosci-celne",
+typ: "ALL",
+    title: { pl: "Należności celne", en: "Customs duties" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nPrzesyłam powiadomienie o należnościach celno-podatkowych.\n\nPo opłaceniu proszę o przesłanie potwierdzenia płatności.",
+        f: "Dzień dobry,\n\nPrzesyłam powiadomienie o należnościach celno-podatkowych.\n\nPo opłaceniu proszę o przesłanie potwierdzenia płatności."
+      },
+     
+    }
+  },
+
+
+{
+    key: "Po-odprawie",
+typ: "FCL",
+    title: { pl: "Po odprawie", en: "After customs" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nKontener po odprawie, dokumenty w załączniku.\n\n Dodaję koleżankę @ która zorganizuje auto na dostawę, powrócimy ze szczegółami",
+        f: "Dzień dobry,\n\nKontener po odprawie, dokumenty w załączniku.\n\n Dodaję koleżankę @ która zorganizuje auto na dostawę, powrócimy ze szczegółami"
+      },
+     
+    }
+  },
+
+{
+    key: "Po-odprawie",
+typ: "LCL",
+    title: { pl: "Po odprawie", en: "After customs" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nPrzesyłka po odprawie, dokumenty w załączniku.\n\nOrganizuję auto na dostawę, powrócę ze szczegółami.\n\nDostawa na poniższy adres? W jakich godzinach możliwa? Auto z windą jest wymagane?",
+        f: "Dzień dobry,\n\nPrzesyłka po odprawie, dokumenty w załączniku.\n\nOrganizuję auto na dostawę, powrócę ze szczegółami.\n\nDostawa na poniższy adres? W jakich godzinach możliwa? Auto z windą jest wymagane?"
+      },
+     
+    }
+  },
+
+
+{
+    key: "Awizacja-na-magazyn",
+typ: "LCL",
+    title: { pl: "Awizacja na magazyn", en: "Advice on warehouse" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nPrzesyłam awizację <b>SS2211550</b>\n\nNasz numer ref do faktury: <b>ZL500/07/25</b>\n\nKierowca będzie dzisiaj.\n\nKierowca: \n\nAuto: \n\nProszę o potwierdzenie przyjęcia awizacji.",
+        f: "Dzień dobry,\n\nPrzesyłam awizację <b>SS2211550</b>\n\nNasz numer ref do faktury: <b>ZL500/07/25</b>\n\nKierowca będzie dzisiaj.\n\nKierowca: \n\nAuto: \n\nProszę o potwierdzenie przyjęcia awizacji."
+      },
+    }
+  },
+
+{
+    key: "Awizacja-do-klienta",
+typ: "LCL",
+    title: { pl: "Awizacja do klienta", en: "Advice to client" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nkierowca dostarczy towar jutro.\n\nPoniżej dane:\n\nKierowca: \nAuto: \n\nW przypadku stwierdzenia uszkodzenia towaru prosimy o dodanie adnotacji na dokumencie CMR, którą będzie miał ze sobą kierowca. W przypadku odebrania towaru przez odbiorcę, który nie zgłosił lub nie stwierdził szkody w towarze przyjmuje się, że towar odpowiada stanowi wskazanemu w dokumencie transportowym.",
+        f: "Dzień dobry,\n\nkierowca dostarczy towar jutro.\n\nPoniżej dane:\n\nKierowca: \nAuto: \n\nW przypadku stwierdzenia uszkodzenia towaru prosimy o dodanie adnotacji na dokumencie CMR, którą będzie miał ze sobą kierowca. W przypadku odebrania towaru przez odbiorcę, który nie zgłosił lub nie stwierdził szkody w towarze przyjmuje się, że towar odpowiada stanowi wskazanemu w dokumencie transportowym."
+      },
+ en: {
+        m: "Good morning,\n\nThe driver will deliver the goods tomorrow.\n\nBelow are the details:\n\nDriver: \nVehicle: \n\nIf any damage to the goods is detected, please add a note on the CMR document, which the driver will carry with him. If the goods are collected by the recipient who has not reported or found any damage to the goods, it is assumed that the goods are in the condition indicated in the transport document.",
+        f: "Good morning,\n\nThe driver will deliver the goods tomorrow.\n\nBelow are the details:\n\nDriver: \nVehicle: \n\nIf any damage to the goods is detected, please add a note on the CMR document, which the driver will carry with him. If the goods are collected by the recipient who has not reported or found any damage to the goods, it is assumed that the goods are in the condition indicated in the transport document."
+      }
+    }
+  },
+
+
+];
+
+function renderTemplates() {
+  const typ = document.getElementById('typ').value;
+const lang = document.getElementById('lang').value;
+  const gender = document.getElementById('gender').value;
+  const view = document.getElementById('view') ? document.getElementById('view').value : "column";
+  const list = document.getElementById('templates-list');
+  list.innerHTML = '';
+  list.className = 'templates-list' + (view === "row" ? ' row' : '');
+  templates
+  .filter(t =>
+    (!t.typ || t.typ === typ || t.typ === "ALL") && t.content[lang] && t.content[lang][gender]
+  )
+  .forEach(t => {
+    const text = t.content[lang][gender] || '';
+    const block = document.createElement('div');
+    block.className = 'template-block' + (view === "row" ? ' row-block' : '');
+    block.innerHTML = `
+      <div class="template-header">${t.title[lang]}</div>
+      <div class="template-content">${text.replace(/\n/g,'<br>')}</div>
+    `;
+    list.appendChild(block);
+  });
+}
+renderTemplates();
+</script>
+</body>
+</html>
