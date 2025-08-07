@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <title>Kalkulator Składowania Towaru Drobnicowego - Morze</title>
+  <title>Kalkulator Składowania LCL Kolej</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <style>
     body {
@@ -112,20 +112,14 @@
     <label for="agent">Wybierz agenta dekonsolidacyjnego:</label>
     <select id="agent">
       <option value="">Wybierz agenta</option>
-      <option value="Shipco Transport">Shipco Transport</option>
-      <option value="Euroconsol">Euroconsol</option>
-      <option value="Greencarrier">Greencarrier</option>
+<option value="Sunstar">Sunstar</option>
+<option value="ECU">ECU</option>
+<option value="Greencarrier">Greencarrier</option>
+<option value="Shipco Transport">Shipco Transport</option>
+<option value="Euroconsol">Euroconsol</option>
     </select>
 
-    <!-- Sekcja wyboru kraju -->
-    <label for="country" style="margin-top:20px;">Wybierz kraj destynacji:</label>
-    <select id="country">
-      <option value="">Wybierz kraj</option>
-      <option value="Polska">Polska</option>
-      <option value="Niemcy">Niemcy</option>
-    </select>
-
-    <!-- Pole ilości W/M -->
+    <!-- Ilość W/M -->
     <label id="wm-label" style="margin-top:20px;">
       Ilość W/M (waga/miara):
       <input type="number" id="wm" min="0" step="0.01" placeholder="np. 12.50" />
@@ -146,55 +140,46 @@
 </div>
 
 <script>
-// Dane cennikowe dla agentów (Morze)
+// Dane cennikowe dla agentów (Morze) – tylko dla Polski
 const morzePricing = {
   "Shipco Transport": {
-    "Polska": {
-      freeDays: 7, 
-      secondWeekRate: 17, 
-      thirdWeekRate: 23,
-      minCost: 85
-    },
-    "Niemcy": {
-      freeDays: 5, 
-      next4DaysRate: 9, 
-      additionalDaysRate: 17,
-      minCost: 85
-    },
+    freeDays: 7, 
+    secondWeekRate: 17, 
+    thirdWeekRate: 23,
+    minCost: 85
   },
   "Euroconsol": {
-    "Polska": {
-      freeDays: 5,
-      dailyRate: 3,
-      minCost: 0
-    },
-    "Niemcy": {
-      freeDays: 3,
-      dailyRateGermany: 8,
-      minCost: 0
-    },
+    freeDays: 5,
+    dailyRate: 3,
+    minCost: 0
   },
   "Greencarrier": {
-    "Polska": {
-      freeDays: 7,
-      day7to14Rate: 20,
-      above14DaysRate: 22,
-      minCost: 50
-    },
-    "Niemcy": {
-      freeDays: 3,
-      day4to10Rate: 20,
-      above10DaysRate: 12,
-      minCost: 20
-    },
+    freeDays: 7,
+    day7to14Rate: 20,
+    above14DaysRate: 22,
+    minCost: 50
   },
+  // Dodany nowy agent "Sunstar"
+  "Sunstar": {
+    freeDays: 5,
+    dailyRate: 2,
+    minCost: 20,
+    currency: "USD"
+  },
+  // Dodany agent "ECU" z cennikiem
+"ECU": {
+  freeDays: 7, // 7 dni wolnych
+  dailyRate1to7: 4, // Dni 1-7 -> 4 USD/W/M/dzień
+  dailyRate8Plus: 5, // Po 7 dniu -> 5 USD/W/M/dzień
+  minCost1to7: 4, // Minimalna stawka dla dni 1-7: 4 USD
+  minCost8Plus: 5, // Minimalna stawka dla powyżej 7 dni: 5 USD
+  currency: "USD" // Waluta USD
+}
 };
-
 
 // Funkcja liczenia składowego
 function calculateStorage() {
   const agent = document.getElementById('agent').value;
-  const country = document.getElementById('country').value;
   const unloadDate = new Date(document.getElementById('unload_date').value);
   const pickupDate = new Date(document.getElementById('pickup_date').value);
   const wm = parseFloat(document.getElementById('wm').value);  // W/M
@@ -204,15 +189,12 @@ function calculateStorage() {
   // Walidacja danych
   let errorMessage = '';
 
-  // Sprawdzamy, czy agent, kraj, W/M i daty zostały poprawnie wybrane
-  if (!agent && !country && (isNaN(wm) || wm <= 0) && !unloadDate && !pickupDate) {
-    errorMessage = 'Proszę wybrać agenta, kraj, wprowadzić poprawną ilość W/M (większą niż 0) oraz wybrać daty rozładunku i odbioru.';
+  // Sprawdzamy, czy agent, W/M i daty zostały poprawnie wybrane
+  if (!agent && (isNaN(wm) || wm <= 0) && !unloadDate && !pickupDate) {
+    errorMessage = 'Proszę wybrać agenta, wprowadzić poprawną ilość W/M (większą niż 0) oraz wybrać daty rozładunku i odbioru.';
   } else {
     if (!agent) {
       errorMessage += 'Proszę wybrać agenta. ';
-    }
-    if (!country) {
-      errorMessage += 'Proszę wybrać kraj. ';
     }
     if (isNaN(wm) || wm <= 0) {
       errorMessage += 'Proszę wprowadzić poprawną ilość W/M (większą niż 0). ';
@@ -237,9 +219,9 @@ function calculateStorage() {
 
   const daysInStorage = Math.round((pickupDate - unloadDate) / (24 * 60 * 60 * 1000)) + 1;
 
-  const agentPricing = morzePricing[agent]?.[country];
+  const agentPricing = morzePricing[agent];
   if (!agentPricing) {
-    resultBox.innerHTML = '<p style="color: red;">Brak danych cennikowych dla wybranego agenta i kraju.</p>';
+    resultBox.innerHTML = '<p style="color: red;">Brak danych cennikowych dla wybranego agenta.</p>';
     return;
   }
 
@@ -248,26 +230,43 @@ function calculateStorage() {
   let rate = 0;
   let currency = '';
 
-  // Rozróżnienie walut i stawek dla każdego agenta
+  // Rozróżnienie stawek i walut dla każdego agenta
   if (agent === "Shipco Transport") {
-    if (country === "Polska") {
-      rate = agentPricing.secondWeekRate;
-      currency = "PLN";
-    } else if (country === "Niemcy") {
-      rate = agentPricing.thirdWeekRate;
-      currency = "EUR";
-    }
+    rate = agentPricing.secondWeekRate;
+    currency = "PLN";
   } else if (agent === "Euroconsol") {
     rate = agentPricing.dailyRate;
     currency = "EUR";
   } else if (agent === "Greencarrier") {
-    if (country === "Polska") {
-      rate = agentPricing.day7to14Rate;
-      currency = "PLN";
-    } else if (country === "Niemcy") {
-      rate = agentPricing.above14DaysRate;
+    rate = agentPricing.day7to14Rate;
+    currency = "PLN";
+  } else if (agent === "Sunstar") {
+    rate = agentPricing.dailyRate;
+    currency = "USD";
+  } else if (agent === "ECU") {
+    // Cennik dla ECU
+    if (exceededDays <= 7) {
+      rate = agentPricing.dailyRate1to7;
+      currency = "USD";
+    } else {
+      rate = agentPricing.dailyRate8Plus;
       currency = "USD";
     }
+  }
+
+  // Generowanie zakresu dni wolnych
+  const freeStartDate = new Date(unloadDate);
+  const freeEndDate = new Date(unloadDate);
+  freeEndDate.setDate(freeEndDate.getDate() + freeDays - 1); // Dodaj dni wolne do daty rozładunku
+  const freeDaysRange = `${freeStartDate.toLocaleDateString('pl-PL')} - ${freeEndDate.toLocaleDateString('pl-PL')}`;
+
+  // Generowanie zakresu dni przekroczonych
+  const exceededStartDate = new Date(freeEndDate);
+  exceededStartDate.setDate(exceededStartDate.getDate() + 1); // Pierwszy przekroczony dzień to dzień po ostatnim dniu wolnym
+  const exceededEndDate = new Date(pickupDate);
+  let exceededDaysRange = '';
+  if (exceededDays > 0) {
+    exceededDaysRange = `${exceededStartDate.toLocaleDateString('pl-PL')} - ${exceededEndDate.toLocaleDateString('pl-PL')}`;
   }
 
   // Obliczenia kosztu
@@ -278,25 +277,26 @@ function calculateStorage() {
 
   // Wynik w wybranym formacie
   resultBox.innerHTML = `
-    <p><strong>Gałąź transportu:</strong> Morze</p>
-    <p><strong>Agent drobnicowy:</strong> ${agent}</p>
-    <p><strong>Kraj:</strong> ${country}</p>
     <p><strong>Okres składowania:</strong> ${unloadDate.toLocaleDateString('pl-PL')} – ${pickupDate.toLocaleDateString('pl-PL')}</p>
-    <p><strong>Dni wolne:</strong> ${freeDays}</p>
-    <p><strong>Przekroczone dni:</strong> ${exceededDays}</p>
-    <p><strong>Stawka za dzień:</strong> ${rate} ${currency}/w/m</p>
-    <p><strong>Minimalna stawka całkowita:</strong> ${agentPricing.minCost} ${currency}/w/m</p>
+    <p><strong>Dni wolne:</strong> ${freeDays} (${freeDaysRange})</p>
+    <p><strong>Przekroczone dni:</strong> ${exceededDays} ${exceededDays > 0 ? `(${exceededDaysRange})` : ''}</p>
+    <p><strong>Stawka za dzień:</strong> ${rate} ${currency} / w/m</p>
+    <p><strong>Minimalna stawka:</strong> ${agentPricing.minCost} ${currency}</p>
     <p><strong><b>Łączny koszt:</b> <span style="color:#be1e2d;">${totalCost.toFixed(2)} ${currency}</span></strong></p>
   `;
 }
 
+// Funkcja ustawiająca dzisiejszą datę jako domyślną
+function setDefaultDate() {
+  const today = new Date().toISOString().split('T')[0]; // Pobranie dzisiejszej daty w formacie YYYY-MM-DD
+  document.getElementById('unload_date').value = today; // Ustawienie dla daty rozładunku
+  document.getElementById('pickup_date').value = today; // Ustawienie dla daty odbioru
+}
 
-
-
-
+// Wywołanie funkcji po załadowaniu strony
+window.onload = setDefaultDate;
 
 </script>
 
 </body>
 </html>
-
