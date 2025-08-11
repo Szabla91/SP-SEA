@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Kontakty – Transport Morski</title>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    color: #be1e2d;
+    padding: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  h1 {
+    color: #be1e2d;
+    border-bottom: 2px solid #be1e2d;
+    padding-bottom: 10px;
+    margin-bottom: 40px;
+    font-size: 2.2rem;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  .btn-back {
+    position: fixed;
+    top: 18px;
+    left: 20px;
+    padding: 8px 16px;
+    background-color: #be1e2d;
+    color: white;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+  }
+  .btn-back:hover {
+    background-color: #a31520;
+  }
+  .tiles-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 34px;
+    justify-content: center;
+  }
+  .tile {
+    background: #fafbfc;
+    border: 1.5px solid #e5e5e5;
+    border-radius: 16px;
+    padding: 18px 24px;
+    min-width: 180px;
+    min-height: 54px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
+    font-size: 1.05rem;
+    color: #be1e2d;
+    font-weight: 600;
+    text-align: center;
+  }
+  .tile.selected,
+  .tile:hover {
+    border-color: #be1e2d;
+    background: #fff0f2;
+    box-shadow: 0 4px 18px rgba(190,30,45,0.10);
+  }
+  .contact-list {
+    display: none;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: stretch;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    max-width: 100%;
+    animation: fadeIn 0.4s;
+    margin-bottom: 12px;
+  }
+  .contact-list.active {
+    display: flex;
+  }
+  .contact-card {
+    background: #fff;
+    border: 1.5px solid #e5e5e5;
+    border-radius: 13px;
+    padding: 10px 20px;
+    min-width: 250px;
+    max-width: 600px;
+    width: fit-content;
+    margin: 0;
+    flex: 0 1 auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: box-shadow 0.2s;
+  }
+  .contact-card h3 {
+    color: #be1e2d;
+    display: block;
+    margin: 0;
+    padding: 4px 8px;
+    border: 2px solid #be1e2d;
+    border-radius: 7px;
+    box-shadow: 0 1px 4px rgba(190,30,45,.08);
+    background: inherit;
+  }
+  .contact-card .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    padding-top: 8px;
+    width: 100%;
+  }
+  .contact-card p {
+    color: #333;
+    margin: 4px 0;
+    text-align: center;
+  }
+  .contact-card a {
+    color: #be1e2d;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.97rem;
+  }
+  .contact-card a:hover {
+    text-decoration: underline;
+    color: #cc0000;
+  }
+  .header {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+    color: #be1e2d;
+    margin: 10px 0 6px 0;
+  }
+  .header span {
+    display: inline-block;
+    padding: 0 10px 4px 10px;
+    border-bottom: 3px solid #be1e2d;
+    width: auto; /* Zmienione z 150px na auto */
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (max-width: 1050px) {
+    .contact-list {
+      flex-direction: column !important;
+      gap: 18px;
+      align-items: center; /* Wycentrowanie kart w kolumnie */
+    }
+  }
+  @media (max-width: 900px) {
+    .tiles-container {
+      flex-direction: column;
+      gap: 14px;
+    }
+    .tile {
+      min-width: unset;
+      width: 100%;
+    }
+    .contact-list {
+      padding: 0;
+    }
+  }
+</style>
+</head>
+<body>
+  <a href="Baza wiedzy morze.html" class="btn-back">Powrót do ekranu głównego</a>
+  <h1>Kontakty – Transport Morski</h1>
+
+  <input type="text" id="search" placeholder="Szukaj kontaktu..." style="
+    display: block;
+    margin: 0 auto 20px auto;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+  ">
+
+  <div class="tiles-container">
+    <div class="tile" data-section="armatorzy">Armatorzy</div>
+    <div class="tile" data-section="agencje">Agencje celne</div>
+    <div class="tile" data-section="porty">Porty</div>
+    <div class="tile" data-section="agenci">Agenci</div>
+    <div class="tile" data-section="drobnica">Agenci drobnicowi</div>
+  </div>
+
+  <div id="contacts-armatorzy" class="contact-list">
+    <div class="contact-card">
+      <h3>EVERGREEN</h3>
+      <div class="content">
+        <p><strong>Opiekun:</strong><br/>Krzysztof Syrokwarz<br/>Grzegorz Wietrzynski</p>
+        <p><strong>Mail do opiekuna:</strong><br/><a href="mailto:KrzysztofSyrokwarz@evergreen-shipping.pl">KrzysztofSyrokwarz@evergreen-shipping.pl</a><br/><a href="mailto:GrzegorzWietrzynski@evergreen-shipping.pl">GrzegorzWietrzynski@evergreen-shipping.pl</a></p>
+        <p><strong>Mail importowy:</strong> <a href="mailto:szymonfechner@evergreen-shipping.pl">szymonfechner@evergreen-shipping.pl</a></p>
+        <p><strong>Mail eksportowy:</strong> <a href="mailto:gdy@evergreen-shipping.pl">gdy@evergreen-shipping.pl</a></p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3>MAERSK</h3>
+      <div class="content">
+        <p><strong>Opiekun:</strong> Piotr Dziurdziak</p>
+        <p><strong>Mail do opiekuna:</strong> <a href="mailto:piotr.dziurdziak@maersk.com">piotr.dziurdziak@maersk.com</a></p>
+        <p><strong>Mail importowy:</strong> <a href="mailto:pl.import@maersk.com">pl.import@maersk.com</a></p>
+        <p><strong>Mail eksportowy:</strong> <a href="mailto:pl.export@maersk.com">pl.export@maersk.com</a></p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3>MSC</h3>
+      <div class="content">
+        <p><strong>Opiekun:</strong> Małgorzata Fisźlak-Podgórska</p>
+        <p><strong>Mail do opiekuna:</strong> <a href="mailto:malgorzata.fiszlak-podgorska@msc.com">malgorzata.fiszlak-podgorska@msc.com</a></p>
+        <p><strong>Mail importowy:</strong><br/><a href="mailto:pol-import@msc.com">pol-import@msc.com</a><br/><a href="mailto:PL159-import.gdy01@msc.com">PL159-import.gdy01@msc.com</a></p>
+        <p><strong>Mail eksportowy:</strong> <a href="mailto:pol-info@msc.com">pol-info@msc.com</a></p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3>COSCO</h3>
+      <div class="content">
+        <p><strong>Mail importowy:</strong> <a href="mailto:import@cosco.pl">import@cosco.pl</a></p>
+        <p><strong>Mail eksportowy:</strong> <a href="mailto:export@cosco.pl">export@cosco.pl</a></p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3>OOCL</h3>
+      <div class="content">
+        <p><strong>Mail importowy:</strong> <a href="mailto:plzib@oocl.com">plzib@oocl.com</a></p>
+        <p><strong>Mail eksportowy:</strong> <a href="mailto:PLZOB@oocl.com">PLZOB@oocl.com</a></p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3>CMA</h3>
+      <div class="content">
+        <p><strong>Opiekun:</strong> Gdynia P.Prachnio</p>
+        <p><strong>Mail do opiekuna:</strong> <a href="mailto:gdy.pprachnio@cma-cgm.com">gdy.pprachnio@cma-cgm.com</a></p>
+        <p><strong>Mail importowy:</strong> <a href="mailto:pol.importrelease@cma-cgm.com">pol.importrelease@cma-cgm.com</a></p>
+        <p><strong>Mail eksportowy:</strong> <a href="mailto:gdy.customerserviceexp@cma-cgm.com">gdy.customerserviceexp@cma-cgm.com</a></p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3>HAPAG</h3>
+      <div class="content">
+        <p><strong>Opiekun:</strong> Jarosław Kalinowski</p>
+        <p><strong>Mail do opiekuna:</strong> <a href="mailto:jaroslaw.kalinowski@hlag.com">jaroslaw.kalinowski@hlag.com</a></p>
+        <p><strong>Mail importowy:</strong> <a href="mailto:POLAND@SERVICE.HLAG.COM">POLAND@SERVICE.HLAG.COM</a></p>
+        <p><strong>Mail eksportowy:</strong> <a href="mailto:poland@service.hlag.com">poland@service.hlag.com</a></p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3>ONE</h3>
+      <div class="content">
+        <p><strong>Mail importowy:</strong><br/><a href="mailto:monika.wielgosz@one-line.com">monika.wielgosz@one-line.com</a><br/><a href="mailto:pl.csv.imp@one-line.com">pl.csv.imp@one-line.com</a></p>
+        <p><strong>Mail eksportowy:</strong> CZAT NA STRONIE</p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3>YML</h3>
+      <div class="content">
+        <p><strong>Mail importowy:</strong> <a href="mailto:import@aseco.pl">import@aseco.pl</a></p>
+        <p><strong>Mail eksportowy:</strong> -</p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3>HMM</h3>
+      <div class="content">
+        <p><strong>Mail importowy:</strong> <a href="mailto:kawo@hmmagency.eu">kawo@hmmagency.eu</a></p>
+        <p><strong>Mail eksportowy:</strong> -</p>
+      </div>
+    </div>
+    <div class="contact-card">
+      <h3>ZIM</h3>
+      <div class="content">
+        <p><strong>Opiekun:</strong> Piotr Kalandyk</p>
+        <p><strong>Mail do opiekuna:</strong> <a href="mailto:Kalandyk.Piotr@zim.com">Kalandyk.Piotr@zim.com</a></p>
+        <p><strong>Mail importowy:</strong> <a href="mailto:Gorny.Paulina@pl.zim.com">Gorny.Paulina@pl.zim.com</a></p>
+        <p><strong>Mail eksportowy:</strong> -</p>
+      </div>
+    </div>
+  </div>
+
+ <!-- Agencje celne -->
+  <div id="contacts-agencje" class="contact-list">
+<div class="header"><span>POLSKA</span></div>
+    <div class="contact-card">
+      <h3>CUSTOMS SUPPORT (RUSAK)</h3>
+      <div class="content">
+        <p><strong>Główny mail:</strong><br><a href="mailto:operations-warszawa-cuc@customssupport.com">operations-warszawa-cuc@customssupport.com</a><br><strong>Telefon:</strong> 539 770 678</p>
+        <p><strong>Kierownik Agencji:</strong><br> Mariusz Ciastkowski<br> <strong>Mail:</strong> <a href="mailto:m.ciastkowski@customssupport.com">m.ciastkowski@customssupport.com</a><br><strong>Telefon:</strong> 606 282 609</p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>TAKSIM-POL GDYNIA</h3>
+      <div class="content">
+        <p><strong>Główny mail:</strong><br><a href="mailto:gdynia@taksim-pol.com.pl">gdynia@taksim-pol.com.pl</a></p>
+        <p><strong>Kierownik:</strong> Marek Zdyb<br><a href="mailto:marek.zdyb@taksim-pol.com.pl">marek.zdyb@taksim-pol.com.pl</a><br><strong>Telefon:</strong> 501 866 197</p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>HLS Polska</h3>
+      <div class="content">
+<p><strong>Team Leader działu Importu:</strong><br>
+      Leszek Gajda<br>
+      <a href="mailto:leszek.gajda@eurocustoms24.pl">leszek.gajda@eurocustoms24.pl</a><br>
+      <strong>Telefon:</strong> 575 017 096
+    </p>
+        <p><strong>Mail importowy:</strong><br> <a href="mailto:import@eurocustoms24.pl">import@eurocustoms24.pl</a></p>
+        <p><strong>Mail eksportowy:</strong><br> <a href="mailto:export@eurocustoms24.pl">export@eurocustoms24.pl</a></p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>ELCOM</h3>
+      <div class="content">
+        <p><strong>Mail:</strong><br><a href="mailto:agencja@ac-elcom.pl">agencja@ac-elcom.pl</a></p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>ITL OMEGA</h3>
+      <div class="content">
+        <p><strong>Mail:</strong><br>
+<a href="mailto:hamburg@itl-omega.eu">hamburg@itl-omega.eu</a></p>
+        <p><strong>Telefon:</strong> po godzinie 17:00 +49 152 0879 4750</p>
+      </div>
+    </div>
+
+<div class="header"><span>NIEMCY</span></div>
+    <div class="contact-card">
+      <h3>HLS Niemcy</h3>
+      <div class="content">
+        <p><strong>Mail importowy:</strong><br>
+<a href="mailto:import@eurocustoms24.de">import@eurocustoms24.de</a></p>
+        <p><strong>Mail eksportowy:</strong><br>
+<a href="mailto:export@eurocustoms24.de">export@eurocustoms24.de</a></p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>CUSTOMS SUPPORT (PORATH DE)</h3>
+      <div class="content">
+        <p><strong>Mail:</strong><br>
+<a href="mailto:hamburg@customssupport.com">hamburg@customssupport.com</a></p>
+        <p><strong>Dodatkowy mail:</strong><br>
+<a href="mailto:ccd-de@customssupport.com">ccd-de@customssupport.com</a></p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>OCIS</h3>
+      <div class="content">
+        <p><strong>Główny mail:</strong><br>
+<a href="mailto:import@ocis.de">import@ocis.de</a></p>
+        <p><strong>Mail do tranzytów:</strong><br>
+<a href="mailto:transit@ocis.de">transit@ocis.de</a></p>
+        <p><strong>Kierownik Agencji:</strong><br>
+Agnieszka Ozbek<br>
+<a href="mailto:oezbek@ocis.de">oezbek@ocis.de</a></p>
+        <p><strong>Manager Operacyjny:</strong><br>
+Dominika Depka<br>
+<a href="mailto:depka@ocis.de">depka@ocis.de</a><br><strong>Telefon:</strong> +49 (0) 160 886 4357</p>
+      </div>
+    </div>
+  </div>
+
+ <!-- Porty -->
+  <div id="contacts-porty" class="contact-list">
+<div class="header"><span>GDAŃSK</span></div>
+    <div class="contact-card">
+      <h3>BALTIC HUB (DCT)</h3>
+      <div class="content">
+        <p><strong>Magazyn CFS:</strong> <br><a href="mailto:cfs@baltichub.com">cfs@baltichub.com</a><br><strong>Telefon:</strong> 58 737 9180</p>
+        <p><strong>Biuro obsługi klienta:</strong> <br><a href="mailto:customerservice@baltichub.com">customerservice@baltichub.com</a><br><strong>Telefon:</strong> 58 737 6318 wew. 6319</p>
+      </div>
+    </div>
+
+<div class="header"><span>GDYNIA</span></div>
+    <div class="contact-card">
+      <h3>BCT</h3>
+      <div class="content">
+        <p><strong>Mail główny:</strong> <br><a href="mailto:bct@bct.gdynia.pl">bct@bct.gdynia.pl</a><br><strong>Telefon:</strong> 58 350 60 30</p>
+        <p><strong>Rewizje / Skanowania:</strong><br> <a href="mailto:rewizje@bct.gdynia.pl">rewizje@bct.gdynia.pl</a></p>
+        <p><strong>Dyspozytor CFS:</strong><br> <a href="mailto:cfsdysponent@bct.gdynia.pl">cfsdysponent@bct.gdynia.pl</a><br><strong>Telefon:</strong><br>795 501 326<br>795 501 328</p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>GCT</h3>
+      <div class="content">
+        <p><strong>Mail:</strong><br><a href="mailto:cfs@gct.pl">cfs@gct.pl</a><br><br><strong>Telefony:</strong><br>58 78 55 393<br>58 78 55 396<br>513 291 591</p>
+      </div>
+    </div>
+
+<div class="header"><span>REWIZJE</span></div>
+
+    <div class="contact-card">
+      <h3>TSL SILESIA</h3>
+      <div class="content">
+        <p><strong>Zgłoszenie asysty:</strong><br><a href="mailto:gdynia.ot@tsl-silesia.com.pl">gdynia.ot@tsl-silesia.com.pl</a></div>
+    </div>
+
+    <div class="contact-card">
+      <h3>SGS</h3>
+      <div class="content">
+        <p><strong>Baltic Hub</strong><br><a href="mailto:inspektor.dct@sgs.com">inspektor.dct@sgs.com</a><br><strong>Telefony:</strong><br>691 767 423<br>663 683 196</p>
+<p><strong>BCT</strong><br><a href="mailto:bct.gdynia@sgs.com">bct.gdynia@sgs.com</a></p>
+      </div>
+    </div>
+
+  </div>
+
+ <!-- Agenci -->
+  <div id="contacts-agenci" class="contact-list">
+<div class="header"><span>CHINY</span></div>
+    <div class="contact-card">
+      <h3>DK SAILING</h3>
+      <div class="content">
+        <p><strong>Rick</strong><br> <a href="mailto:sales36@dksailing.com">sales36@dksailing.com</a></p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>HUANJI SUPPLY<br>CHAIN MANAGEMENT</h3>
+      <div class="content">
+        <p><strong>Betty Liu</strong><br> <a href="mailto:betty@nb-hj.com">betty@nb-hj.com</a></p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>MRF</h3>
+      <div class="content">
+        <p><strong>Rogen</strong><br> <a href="mailto:rogen_qd@mrflogistics.com">rogen_qd@mrflogistics.com</a></p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>NINGBO BESCOO</h3>
+      <div class="content">
+        <p><strong>Swan</strong><br> <a href="mailto:swan.tong@bescoo.cn">swan.tong@bescoo.cn</a></p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>SHENZHEN SEA-LINK</h3>
+      <div class="content">
+        <p><strong>Richard Xiao</strong><br> <a href="mailto:richard.xiao@szsea-link.com">richard.xiao@szsea-link.com</a></p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>UNITEX</h3>
+      <div class="content">
+        <p><strong>UNITEX</strong><br> <a href="mailto:emp3_szx@uif.com.hk">emp3_szx@uif.com.hk</a></p>
+      </div>
+    </div>
+
+<div class="header"><span>USA / KANADA</span></div>
+
+    <div class="contact-card">
+      <h3>FRACHT EXPRESS</h3>
+      <div class="content">
+        <p><strong>Mail:</strong><br> <a href="mailto:ops@frachtexp.com">ops@frachtexp.com</a><br><a href="mailto:ops2@frachtexp.com">ops2@frachtexp.com</a><br><a href="mailto:ops3@frachtexp.com">ops3@frachtexp.com</a></p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>NEW WAVE INTERNATIONAL CARGO</h3>
+      <div class="content">
+        <p><strong>Piotr Kurpiewski</strong><br> <a href="mailto:piotr.kurpiewski@newwaveic.com">piotr.kurpiewski@newwaveic.com</a></p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>POLIMEX FORWARDING</h3>
+      <div class="content">
+        <p><strong>Helen Huo</strong><br> <a href="mailto:helenh@polimex.com">helenh@polimex.com</a></p>
+      </div>
+    </div>
+
+  </div>
+
+
+ <!-- Agenci drobnicowi -->
+  <div id="contacts-drobnica" class="contact-list">
+
+    <div class="contact-card">
+      <h3>ECU WORLDWIDE</h3>
+      <div class="content">
+<p><strong>Import Manager:</strong><br>Szymon Kowalewski<br> <a href="mailto:szymonkowalewski@ecuworldwide.com">szymonkowalewski@ecuworldwide.com</a><br><strong>Telefon:</strong> 607 587 333 </p>
+        <p><strong>Import:</strong><br>Jakub Maciuk<br> <a href="mailto:jakubmaciuk@ecuworldwide.com">jakubmaciuk@ecuworldwide.com</a><br><strong>Telefon:</strong> 601 582 218</p>
+<p>Anita Kazik<br> <a href="mailto:anitakazik@ecuworldwide.com">anitakazik@ecuworldwide.com</a><br><strong>Telefon:</strong> 603 118 764</p>
+<p>Anna Błędzka<br> <a href="mailto:annabledzka@ecuworldwide.com">annabledzka@ecuworldwide.com</a><br><strong>Telefon:</strong> 601 705 475</p><br>
+
+<p><strong>Export:</strong><br>Kamil Garczyński<br> <a href="mailto:kamilgarczynski@ecuworldwide.com">kamilgarczynski@ecuworldwide.com</a><br><strong>Telefon:</strong> 669 987 555</p>
+<p>Agnieszka Balcer<br> <a href="mailto:agnieszkabalcer@ecuworldwide.com">agnieszkabalcer@ecuworldwide.com</a><br><strong>Telefon:</strong> 609 666 078</p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>EUROCONSOL</h3>
+      <div class="content">
+        <p>
+      Anna Piwek<br>
+      <a href="mailto:piwek@euroconsol.com">piwek@euroconsol.com</a><br>
+      <strong>Telefon:</strong> 505 700 137
+    </p>
+    <p>
+      Edyta Błażejczyk<br>
+      <a href="mailto:blazejczyk@euroconsol.com">blazejczyk@euroconsol.com</a><br>
+      <strong>Telefon:</strong> 882 352 301
+    </p>
+
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>GREENCARRIER</h3>
+      <div class="content">
+        <p><strong>Import:</strong><br> <a href="mailto:import.gcc.pl@greencarrier.com">import.gcc.pl@greencarrier.com</a></p>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>SHIPCO</h3>
+      <div class="content">
+        <p><strong>Import:</strong><br> <a href="mailto:gdyimp@shipco.com">gdyimp@shipco.com</a></p>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  const tiles = document.querySelectorAll('.tile');
+  const contactLists = document.querySelectorAll('.contact-list');
+  const searchInput = document.getElementById('search');
+  const allContactCards = document.querySelectorAll('.contact-card');
+  const allContactLists = document.querySelectorAll('.contact-list');
+  const allHeaders = document.querySelectorAll('.header');
+  let activeSection = null;
+
+
+  tiles.forEach(tile => {
+    tile.addEventListener('click', () => {
+      tiles.forEach(t => t.classList.remove('selected'));
+      tile.classList.add('selected');
+
+      const section = tile.getAttribute('data-section');
+      activeSection = section;
+
+      searchInput.value = '';
+      
+      // Uruchomienie wyszukiwania z pustym zapytaniem, aby poprawnie pokazać/ukryć sekcje
+      const event = new Event('input', { bubbles: true });
+      searchInput.dispatchEvent(event);
+    });
+  });
+
+  searchInput.addEventListener('input', function () {
+    const query = this.value.trim().toLowerCase();
+
+    if (query === '') {
+      // Przywróć widoczność WSZYSTKICH kart na całej stronie.
+      allContactCards.forEach(card => {
+        card.style.display = 'flex';
+      });
+
+      // Przywróć widoczność wszystkich nagłówków (Agencje, Porty etc.).
+      allHeaders.forEach(header => {
+        header.style.display = 'block';
+      });
+
+      // Pokaż tylko aktywną sekcję, a resztę ukryj.
+      allContactLists.forEach(list => {
+        const isActive = list.id === 'contacts-' + activeSection;
+        list.style.display = isActive ? 'flex' : 'none';
+        if(isActive) {
+          list.classList.add('active');
+        } else {
+          list.classList.remove('active');
+        }
+      });
+      return;
+    }
+
+    // W trybie wyszukiwania chowamy nagłówki sekcji
+    allHeaders.forEach(header => header.style.display = 'none');
+
+    let foundInSections = new Set();
+    allContactCards.forEach(card => {
+      const cardText = card.textContent.toLowerCase();
+      if (cardText.includes(query)) {
+        card.style.display = 'flex';
+        foundInSections.add(card.closest('.contact-list'));
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    allContactLists.forEach(list => {
+      list.style.display = foundInSections.has(list) ? 'flex' : 'none';
+    });
+  });
+</script>
+
+</body>
+</html>
