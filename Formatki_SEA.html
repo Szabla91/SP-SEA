@@ -208,7 +208,7 @@ text-align: center;
   <div class="templates-list" id="templates-list"></div>
 </div>
 <script>
-// Przykładowe dane – podmień na swoje szablony
+
 const templates = [
   {
     key: "nowy-klient-ubezpieczenie",
@@ -264,12 +264,12 @@ typ: "FCL",
     title: { pl: "Gotowość towaru", en: "Cargo readiness" },
     content: {
       pl: {
-        m: "Dzień dobry,\n\nAgent skontaktował się z załadowcą, towar ma być gotowy <b>08.11</b>\n\nPrzy tej gotowości towaru agent będzie bookował poniższy sailing:\n\nWypłynięcie statku: <b>12.11</b>\n\nPrzypłynięcie statku: <b>29.10</b>\n\nPowrócę z potwierdzeniem bookingu.",
-        f: "Dzień dobry,\n\nAgent skontaktował się z załadowcą, towar ma być gotowy <b>08.11</b>\n\nPrzy tej gotowości towaru agent będzie bookował poniższy sailing:\n\nWypłynięcie statku: <b>12.11</b>\n\nPrzypłynięcie statku: <b>29.10</b>\n\nPowrócę z potwierdzeniem bookingu."
+        m: "Dzień dobry,\n\nAgent skontaktował się z załadowcą, towar ma być gotowy <b>{today+2}</b>\n\nPrzy tej gotowości towaru agent będzie bookował poniższy sailing:\n\nWypłynięcie statku: <b>{today+10}</b>\n\nPrzypłynięcie statku: <b>{today+55}</b>\n\nPowrócę z potwierdzeniem bookingu.",
+        f: "Dzień dobry,\n\nAgent skontaktował się z załadowcą, towar ma być gotowy <b>{today+2}</b>\n\nPrzy tej gotowości towaru agent będzie bookował poniższy sailing:\n\nWypłynięcie statku: <b>{today+10}</b>\n\nPrzypłynięcie statku: <b>{today+55}</b>\n\nPowrócę z potwierdzeniem bookingu."
       },
       en: {
-        m: "Good morning,\n\nThe agent has contacted the shipper, the goods are expected to be ready on <b>08.11</b>\n\nWith the goods ready, the agent will book the following sailing:\n\nShip departure: <b>12.11</b>\n\nShip arrival: <b>29.10</b>\n\nI will return with booking confirmation.",
-        f: "Good morning,\n\nThe agent has contacted the shipper, the goods are expected to be ready on <b>08.11</b>\n\nWith the goods ready, the agent will book the following sailing:\n\nShip departure: <b>12.11</b>h\n\nShip arrival: <b>29.10</b>\n\nI will return with booking confirmation."
+        m: "Good morning,\n\nThe agent has contacted the shipper, the goods are expected to be ready on <b>{today+2}</b>\n\nWith the goods ready, the agent will book the following sailing:\n\nShip departure: <b>{today+10}</b>\n\nShip arrival: <b>{today+55}</b>\n\nI will return with booking confirmation.",
+        f: "Good morning,\n\nThe agent has contacted the shipper, the goods are expected to be ready on <b>{today+2}</b>\n\nWith the goods ready, the agent will book the following sailing:\n\nShip departure: <b>{today+10}</b>h\n\nShip arrival: <b>{today+55}</b>\n\nI will return with booking confirmation."
       }
     }
   },
@@ -280,12 +280,12 @@ typ: "LCL",
     title: { pl: "Gotowość towaru", en: "Cargo readiness" },
     content: {
       pl: {
-        m: "Dzień dobry,\n\nAgent skontaktował się z załadowcą, towar ma być gotowy <b>08.11</b>\n\nPrzy tej gotowości towaru agent będzie bookował poniższy sailing:\n\nWypłynięcie statku: <b>12.11</b>\n\nPrzypłynięcie statku: <b>29.10</b>\n\nPoniżej szczegóły towaru jakie przesłał załadowca agentowi:\n\n\n\nPowrócę z kolejnymi informacjami.",
-        f: "Dzień dobry,\n\nAgent skontaktował się z załadowcą, towar ma być gotowy <b>08.11</b>\n\nPrzy tej gotowości towaru agent będzie bookował poniższy sailing:\n\nWypłynięcie statku: <b>12.11</b>\n\nPrzypłynięcie statku: <b>29.10</b>\n\nPoniżej szczegóły towaru jakie przesłał załadowca agentowi:\n\n\n\nPowrócę z kolejnymi informacjami."
+        m: "Dzień dobry,\n\nAgent skontaktował się z załadowcą, towar ma być gotowy <b>{today+2}</b>\n\nPrzy tej gotowości towaru agent będzie bookował poniższy sailing:\n\nWypłynięcie statku: <b>{today+10}</b>\n\nPrzypłynięcie statku: <b>{today+55}</b>\n\nPoniżej szczegóły towaru jakie przesłał załadowca agentowi:\n\n\n\nPowrócę z kolejnymi informacjami.",
+        f: "Dzień dobry,\n\nAgent skontaktował się z załadowcą, towar ma być gotowy <b>{today+2}</b>\n\nPrzy tej gotowości towaru agent będzie bookował poniższy sailing:\n\nWypłynięcie statku: <b>{today+10}</b>\n\nPrzypłynięcie statku: <b>{today+55}</b>\n\nPoniżej szczegóły towaru jakie przesłał załadowca agentowi:\n\n\n\nPowrócę z kolejnymi informacjami."
       },
       en: {
-        m: "Good morning,\n\nThe agent has contacted the shipper, the goods are expected to be ready on <b>08.11</b>\n\nWith the goods ready, the agent will book the following sailing:\n\nShip departure: <b>12.11</b>\n\nShip arrival: <b>29.10</b>\n\n\n\nI will return with further information.",
-        f: "Good morning,\n\nThe agent has contacted the shipper, the goods are expected to be ready on <b>08.11</b>\n\nWith the goods ready, the agent will book the following sailing:\n\nShip departure: <b>12.11</b>\n\nShip arrival: <b>29.10</b>\n\n\n\nI will return with further information."
+        m: "Good morning,\n\nThe agent has contacted the shipper, the goods are expected to be ready on <b>{today+2}</b>\n\nWith the goods ready, the agent will book the following sailing:\n\nShip departure: <b>{today+10}</b>\n\nShip arrival: <b>{today+55}</b>\n\n\n\nI will return with further information.",
+        f: "Good morning,\n\nThe agent has contacted the shipper, the goods are expected to be ready on <b>{today+2}</b>\n\nWith the goods ready, the agent will book the following sailing:\n\nShip departure: <b>{today+10}</b>\n\nShip arrival: <b>{today+55}</b>\n\n\n\nI will return with further information."
       }
     }
   },
@@ -296,12 +296,12 @@ typ: "FCL",
     title: { pl: "Booking", en: "Booking" },
     content: {
       pl: {
-        m: "Dzień dobry,\n\nOtrzymałem potwierdzenie bookingu od agenta, poniżej szczegóły:\n\nWypłynięcie statku zaplanowane zostało na <b>12.11</b>\n\nPrzypłynięcie statku zostało zaplanowane na <b>29.10</b>\n\nPowrócę z kolejnymi informacjami.",
-        f: "Dzień dobry,\n\nOtrzymałam potwierdzenie bookingu od agenta, poniżej szczegóły:\n\nWypłynięcie statku zaplanowane zostało na <b>12.11</b>\n\nPrzypłynięcie statku zostało zaplanowane na <b>29.10</b>\n\nPowrócę z kolejnymi informacjami."
+        m: "Dzień dobry,\n\nOtrzymałem potwierdzenie bookingu od agenta, poniżej szczegóły:\n\nWypłynięcie statku zaplanowane zostało na <b>{today+10}</b>\n\nPrzypłynięcie statku zostało zaplanowane na <b>{today+55}</b>\n\nPowrócę z kolejnymi informacjami.",
+        f: "Dzień dobry,\n\nOtrzymałam potwierdzenie bookingu od agenta, poniżej szczegóły:\n\nWypłynięcie statku zaplanowane zostało na <b>{today+10}</b>\n\nPrzypłynięcie statku zostało zaplanowane na <b>{today+55}</b>\n\nPowrócę z kolejnymi informacjami."
       },
       en: {
-        m: "Good morning,\n\nI received a booking confirmation from the agent, below are the details:\n\nThe ship's departure is scheduled for <b>12/11</b>\n\nThe ship's arrival is scheduled for <b>29/10</b>\n\nI will return with further information.",
-        f: "Good morning,\n\nI received a booking confirmation from the agent, below are the details:\n\nThe ship's departure is scheduled for <b>12/11</b>\n\nThe ship's arrival is scheduled for <b>29/10</b>\n\nI will return with further information."
+        m: "Good morning,\n\nI received a booking confirmation from the agent, below are the details:\n\nThe ship's departure is scheduled for <b>{today+10}</b>\n\nThe ship's arrival is scheduled for <b>{today+55}</b>\n\nI will return with further information.",
+        f: "Good morning,\n\nI received a booking confirmation from the agent, below are the details:\n\nThe ship's departure is scheduled for <b>{today+10}</b>\n\nThe ship's arrival is scheduled for <b>{today+55}</b>\n\nI will return with further information."
       }
     }
   },
@@ -345,12 +345,12 @@ typ: "LCL",
     title: { pl: "Odbiór towaru", en: "Pickup" },
     content: {
       pl: {
-        m: "Dzień dobry,\n\nTowar został odebrany. W załączniku przesyłam zdjęcia.\n\nWypłynięcie statku zaplanowane jest na <b>12.11</b>\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie.",
-        f: "Dzień dobry,\n\nTowar został odebrany. W załączniku przesyłam zdjęcia.\n\nWypłynięcie statku zaplanowane jest na <b>12.11</b>\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie."
+        m: "Dzień dobry,\n\nTowar został odebrany. W załączniku przesyłam zdjęcia.\n\nWypłynięcie statku zaplanowane jest na <b>{today+7}</b>\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie.",
+        f: "Dzień dobry,\n\nTowar został odebrany. W załączniku przesyłam zdjęcia.\n\nWypłynięcie statku zaplanowane jest na <b>{today+7}</b>\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie."
       },
       en: {
-        m: "Good morning,\n\nThe goods have been picked up. I've attached photos.\n\nI will return with confirmation after departure.",
-        f: "Good morning,\n\nThe goods have been picked up. I've attached photos.\n\nI will return with confirmation after departure."
+        m: "Good morning,\n\nThe goods have been picked up. I've attached photos.\n\nThe ship is scheduled to sail on <b>{today+7}</b>\n\nI will return with confirmation after departure.",
+        f: "Good morning,\n\nThe goods have been picked up. I've attached photos.\n\nThe ship is scheduled to sail on <b>{today+7}</b>\n\nI will return with confirmation after departure."
       }
     }
   },
@@ -393,12 +393,12 @@ typ: "FCL",
     title: { pl: "Wypłynięcie statku", en: "Departure" },
     content: {
       pl: {
-        m: "Dzień dobry,\n\nKontener wypłynął statkiem <b>23.07</b>\nPlanowane przypłynięcie do Gdańska: ok. <b>10.09</b>\n\nW załączeniu przesyłam BL - proszę o potwierdzenie poprawności danych.\n\n<b>BARDZO WAŻNE</b> – prosimy o przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi z możliwie największym wyprzedzeniem. Od dnia 31.10.2024 wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.\n\n<b>Po przekroczeniu wolnego terminu obowiązują standardowe opłaty za demurrage, detention oraz storage.</b>",
-        f: "Dzień dobry,\n\nKontener wypłynął statkiem <b>23.07</b>\nPlanowane przypłynięcie do Gdańska: ok. <b>10.09</b>\n\nW załączeniu przesyłam BL - proszę o potwierdzenie poprawności danych.\n\n<b>BARDZO WAŻNE</b> – prosimy o przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi z możliwie największym wyprzedzeniem. Od dnia 31.10.2024 wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.\n\n<b>Po przekroczeniu wolnego terminu obowiązują standardowe opłaty za demurrage, detention oraz storage.</b>"
+        m: "Dzień dobry,\n\nKontener wypłynął statkiem <b>{today}</b>\nPlanowane przypłynięcie do Gdańska: ok. <b>{today+45}</b>\n\nW załączeniu przesyłam BL - proszę o potwierdzenie poprawności danych.\n\n<b>BARDZO WAŻNE</b> – prosimy o przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi z możliwie największym wyprzedzeniem. Od dnia 31.10.2024 wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.\n\n<b>Po przekroczeniu wolnego terminu obowiązują standardowe opłaty za demurrage, detention oraz storage.</b>",
+        f: "Dzień dobry,\n\nKontener wypłynął statkiem <b>{today}</b>\nPlanowane przypłynięcie do Gdańska: ok. <b>{today+45}</b>\n\nW załączeniu przesyłam BL - proszę o potwierdzenie poprawności danych.\n\n<b>BARDZO WAŻNE</b> – prosimy o przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi z możliwie największym wyprzedzeniem. Od dnia 31.10.2024 wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.\n\n<b>Po przekroczeniu wolnego terminu obowiązują standardowe opłaty za demurrage, detention oraz storage.</b>"
       },
       en: {
-        m: "Good morning,\n\nThe shipment departured on <b>14.04</b>\nPlanned arrival to Hamburg: approx. <b>29.04</b>\n\nAttached I am sending BL - Please confirm the correctness of the data.\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.\n\n<b>Demurrage and detention costs after the free date will be charged according to the shipowner's tariff.</b>",
-        f: "Good morning,\n\nThe shipment departured on <b>14.04</b>\nPlanned arrival to Hamburg: approx. <b>29.04</b>\n\nAttached I am sending BL - Please confirm the correctness of the data.\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.\n\n<b>Demurrage and detention costs after the free date will be charged according to the shipowner's tariff.</b>"
+        m: "Good morning,\n\nThe shipment departured on <b>{today}</b>\nPlanned arrival to Hamburg: approx. <b>{today+40}</b>\n\nAttached I am sending BL - Please confirm the correctness of the data.\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.\n\n<b>Demurrage and detention costs after the free date will be charged according to the shipowner's tariff.</b>",
+        f: "Good morning,\n\nThe shipment departured on <b>{today}</b>\nPlanned arrival to Hamburg: approx. <b>{today+40}</b>\n\nAttached I am sending BL - Please confirm the correctness of the data.\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.\n\n<b>Demurrage and detention costs after the free date will be charged according to the shipowner's tariff.</b>"
       }
     }
   },
@@ -409,12 +409,12 @@ typ: "LCL",
     title: { pl: "Wypłynięcie statku", en: "Departure" },
     content: {
       pl: {
-        m: "Dzień dobry,\n\nKontener wypłynął statkiem <b>23.07</b>\nPlanowane przypłynięcie do Gdańska: ok. <b>10.09</b>\n\nW załączeniu przesyłam BL - proszę o potwierdzenie poprawności danych.\n\n<b>BARDZO WAŻNE</b> – prosimy o przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi z możliwie największym wyprzedzeniem. Od dnia 31.10.2024 wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.\n\n<b>Po przekroczeniu wolnego terminu na magazynie obowiązują standardowe opłaty za  składowanie.</b>",
-        f: "Dzień dobry,\n\nKontener wypłynął statkiem <b>23.07</b>\nPlanowane przypłynięcie do Gdańska: ok. <b>10.09</b>\n\nW załączeniu przesyłam BL - proszę o potwierdzenie poprawności danych.\n\n<b>BARDZO WAŻNE</b> – prosimy o przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi z możliwie największym wyprzedzeniem. Od dnia 31.10.2024 wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.\n\n<b>Po przekroczeniu wolnego terminu na magazynie obowiązują standardowe opłaty za  składowanie.</b>"
+        m: "Dzień dobry,\n\nKontener wypłynął statkiem <b>{today}</b>\nPlanowane przypłynięcie do Gdańska: ok. <b>{today+45}</b>\n\nW załączeniu przesyłam BL - proszę o potwierdzenie poprawności danych.\n\n<b>BARDZO WAŻNE</b> – prosimy o przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi z możliwie największym wyprzedzeniem. Od dnia 31.10.2024 wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.\n\n<b>Po przekroczeniu wolnego terminu na magazynie obowiązują standardowe opłaty za  składowanie.</b>",
+        f: "Dzień dobry,\n\nKontener wypłynął statkiem <b>{today}</b>\nPlanowane przypłynięcie do Gdańska: ok. <b>{today+45}</b>\n\nW załączeniu przesyłam BL - proszę o potwierdzenie poprawności danych.\n\n<b>BARDZO WAŻNE</b> – prosimy o przesłanie dokumentów do odprawy celnej z sugerowanymi kodami celnymi z możliwie największym wyprzedzeniem. Od dnia 31.10.2024 wszedł w życie obowiązek podawania kodów celnych towarów zanim towar przekroczy granicę UE. Jesteśmy zobowiązani te kody przekazać agencji celnej przed dotarciem towaru do Polski, w przeciwnym razie zostaną Państwo obciążeni refakturowanymi kosztami przestoju kontenera.\n\nProszę o przesłanie dokumentów handlowych do odprawy celnej:\n\n1) <b>faktura handlowa z informacją o:</b>\n• danych adresowych nadawcy\n• odbiorcy towaru\n• warunkach dostawy\n• kraju pochodzenia\n• kwocie i walucie faktury w przypadku towarów otrzymywanych bezpłatnie, musi zostać podana ich realna wartość handlowa dla celów celnych),\n2) <b>packing list</b>,\n3) <b>tłumaczenie nazwy towaru na fakturze wraz z HS kodami</b> - wykonane na kopii faktury z podaniem imienia i nazwiska osoby tłumaczącej (tłumaczenie nie musi być wykonane prze tłumacza przysięgłego),\n4) <b>deklaracja zgodności, świadectwo pochodzenia, świadectwo zdrowia produktu (jeśli są wymagane)</b>\n5) </b>inne dokumenty, do danego towaru, wymagane zgodnie z prawem unijnym.</b>\n\nProszę o zaproponowanie kodu celnego, jeśli odprawiali Państwo już ten towar wcześniej.\n\n<b>Po przekroczeniu wolnego terminu na magazynie obowiązują standardowe opłaty za  składowanie.</b>"
       },
       en: {
-        m: "Good morning,\n\nThe shipment departured on <b>14.04</b>\nPlanned arrival to Hamburg: approx. <b>29.04</b>\n\nAttached I am sending BL - Please confirm the correctness of the data.\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.\n\n<b>Storage costs beyond the free term will be charged according to the warehouse tariff.</b>",
-        f: "Good morning,\n\nThe shipment departured on <b>14.04</b>\nPlanned arrival to Hamburg: approx. <b>29.04</b>\n\nAttached I am sending BL - Please confirm the correctness of the data.\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.\n\n<b>Storage costs beyond the free term will be charged according to the warehouse tariff.</b>"
+        m: "Good morning,\n\nThe shipment departured on <b>{today}</b>\nPlanned arrival to Hamburg: approx. <b>{today+40}</b>\n\nAttached I am sending BL - Please confirm the correctness of the data.\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.\n\n<b>Storage costs beyond the free term will be charged according to the warehouse tariff.</b>",
+        f: "Good morning,\n\nThe shipment departured on <b>{today}</b>\nPlanned arrival to Hamburg: approx. <b>{today+40}</b>\n\nAttached I am sending BL - Please confirm the correctness of the data.\n\nPlease send commercial documents for T1: packing list, commercial invoice, custom office code for clearance and HS code of goods.\n\n<b>Storage costs beyond the free term will be charged according to the warehouse tariff.</b>"
       }
     }
   },
@@ -441,12 +441,12 @@ typ: "ALL",
     title: { pl: "Opóźnione wpłynięcie", en: "Delayed arrival" },
     content: {
       pl: {
-        m: "Dzień dobry,\n\nStatek notuje opóźnienie.\n\nWedług najnowszego trackingu statek ma wpłynąć do portu <b>04.02</b>\n\nPowrócę z kolejnymi informacjami.",
-        f: "Dzień dobry,\n\nStatek notuje opóźnienie.\n\nWedług najnowszego trackingu statek ma wpłynąć do portu <b>04.02</b>\n\nPowrócę z kolejnymi informacjami."
+        m: "Dzień dobry,\n\nStatek notuje opóźnienie.\n\nWedług najnowszego trackingu statek ma wpłynąć do portu <b>{today+3}</b>\n\nPowrócę z kolejnymi informacjami.",
+        f: "Dzień dobry,\n\nStatek notuje opóźnienie.\n\nWedług najnowszego trackingu statek ma wpłynąć do portu <b>{today+3}</b>\n\nPowrócę z kolejnymi informacjami."
       },
       en: {
-        m: "Good morning,\n\nThe ship is experiencing a delay.\n\nAccording to the latest tracking, the vessel is scheduled to arrive at port on <b>04.02</b>\n\nI will return with further information.",
-        f: "Good morning,\n\nThe ship is experiencing a delay.\n\nAccording to the latest tracking, the vessel is scheduled to arrive at port on <b>04.02</b>\n\nI will return with further information."
+        m: "Good morning,\n\nThe ship is experiencing a delay.\n\nAccording to the latest tracking, the vessel is scheduled to arrive at port on <b>{today+3}</b>\n\nI will return with further information.",
+        f: "Good morning,\n\nThe ship is experiencing a delay.\n\nAccording to the latest tracking, the vessel is scheduled to arrive at port on <b>{today+3}</b>\n\nI will return with further information."
       }
     }
   },
@@ -661,20 +661,37 @@ typ: "LCL",
 
 ];
 
+// Nowa uniwersalna funkcja do wstawiania dat
+function insertDynamicDates(text) {
+  const today = new Date();
+
+  return text.replace(/\{(today|\s*today\s*\+\s*(\d+))\}/g, (match, p1, p2) => {
+    let dateToCalculate = new Date(today);
+    if (p2) {
+      const daysToAdd = parseInt(p2, 10);
+      dateToCalculate.setDate(dateToCalculate.getDate() + daysToAdd);
+    }
+    return dateToCalculate.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' });
+  });
+}
+
+
 function renderTemplates() {
   const typ = document.getElementById('typ').value;
-const lang = document.getElementById('lang').value;
+  const lang = document.getElementById('lang').value;
   const gender = document.getElementById('gender').value;
   const view = document.getElementById('view') ? document.getElementById('view').value : "column";
   const list = document.getElementById('templates-list');
   list.innerHTML = '';
   list.className = 'templates-list' + (view === "row" ? ' row' : '');
+
   templates
   .filter(t =>
     (!t.typ || t.typ === typ || t.typ === "ALL") && t.content[lang] && t.content[lang][gender]
   )
   .forEach(t => {
-    const text = t.content[lang][gender] || '';
+    let text = t.content[lang][gender] || '';
+    text = insertDynamicDates(text);
     const block = document.createElement('div');
     block.className = 'template-block' + (view === "row" ? ' row-block' : '');
     block.innerHTML = `
@@ -688,5 +705,6 @@ renderTemplates();
 </script>
 </body>
 </html>
+
 
 
