@@ -377,12 +377,12 @@ typ: "ALL",
     title: { pl: "Opóźnione wypłynięcie", en: "Delayed departure" },
     content: {
       pl: {
-        m: "Dzień dobry,\n\nOtrzymałem informację od agenta,że statek nie wypłynął dzisiaj zgodnie z planem.\n\nWypłynięcie statku zostało przesunięte na <b>29.07</b>\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie.",
-        f: "Dzień dobry,\n\nOtrzymałam informację od agenta,że statek nie wypłynął dzisiaj zgodnie z planem.\n\nWypłynięcie statku zostało przesunięte na <b>29.07</b>\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie."
+        m: "Dzień dobry,\n\nOtrzymałem informację od agenta, że statek nie wypłynął dzisiaj zgodnie z planem.\n\nWypłynięcie statku zostało przesunięte na <b>{today+3}</b>\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie.",
+        f: "Dzień dobry,\n\nOtrzymałam informację od agenta, że statek nie wypłynął dzisiaj zgodnie z planem.\n\nWypłynięcie statku zostało przesunięte na <b>{today+3}</b>\n\nPowrócę z potwierdzeniem jak tylko towar wypłynie."
       },
       en: {
-        m: "Good morning,\n\nI have received information from the agent that the vessel did not sail today as scheduled.\n\nThe vessel's sailing has been postponed to <b>29/07</b>\n\nI will return with confirmation as soon as the cargo sails.",
-        f: "Good morning,\n\nI have received information from the agent that the vessel did not sail today as scheduled.\n\nThe vessel's sailing has been postponed to <b>29/07</b>\n\nI will return with confirmation as soon as the cargo sails."
+        m: "Good morning,\n\nI have received information from the agent that the vessel did not sail today as scheduled.\n\nThe vessel's sailing has been postponed to <b>{today+3}</b>\n\nI will return with confirmation as soon as the cargo sails.",
+        f: "Good morning,\n\nI have received information from the agent that the vessel did not sail today as scheduled.\n\nThe vessel's sailing has been postponed to <b>{today+3}</b>\n\nI will return with confirmation as soon as the cargo sails."
       }
     }
   },
@@ -705,6 +705,7 @@ renderTemplates();
 </script>
 </body>
 </html>
+
 
 
 
