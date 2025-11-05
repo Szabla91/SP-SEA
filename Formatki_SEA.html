@@ -542,6 +542,38 @@ typ: "ALL",
       }
     }
   },
+  
+  {
+    key: "Zlecenie skanowania",
+typ: "FCL",
+    title: { pl: "Zlecenie skanowania", en: "Scanning order" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nKontener trafił na kontrolę. Na ten moment wytypowany został do skanowania.\nZlecam skanowanie kontenera w porcie na pierwszy możliwy termin realizacji.\n\nPowrócę z terminem skanowania.\n\nJednocześnie informuję, iż wszystkie koszty związane z kontrolą / skanowaniem / potencjalną rewizją będą refakturowane 1:1 zgodnie z taryfa portową.",
+        f: "Dzień dobry,\n\nKontener trafił na kontrolę. Na ten moment wytypowany został do skanowania.\nZlecam skanowanie kontenera w porcie na pierwszy możliwy termin realizacji.\n\nPowrócę z terminem skanowania.\n\nJednocześnie informuję, iż wszystkie koszty związane z kontrolą / skanowaniem / potencjalną rewizją będą refakturowane 1:1 zgodnie z taryfa portową."
+      },
+      en: {
+        m: "Good morning,\n\nThe container has been selected for inspection. At this point, it has been selected for scanning.\nI request that the container be scanned at the port at the earliest possible date.\n\nI will get back to you with the scanning date.\ At the same time, I would like to inform you that all costs related to the inspection/scanning/potential review will be re-invoiced 1:1 in accordance with the port tariff.",
+        f: "Good morning,\n\nThe container has been selected for inspection. At this point, it has been selected for scanning.\nI request that the container be scanned at the port at the earliest possible date.\n\nI will get back to you with the scanning date.\ At the same time, I would like to inform you that all costs related to the inspection/scanning/potential review will be re-invoiced 1:1 in accordance with the port tariff."
+      }
+    }
+  },
+
+  {
+    key: "Potwierdzenie skanowania",
+typ: "FCL",
+    title: { pl: "Potwierdzenie skanowania", en: "Scanning confirmation" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nSkanowanie kontenera zostało wyznaczona na <b>{today+1}</b>\nKontenery skanowane są przez cały dzień od 08:00-19:00 (w czasie pracy urzędu).\nZazwyczaj kontener zwalniany jest w kolejnym dniu po skanowaniu (zakładając, że Urząd Celny nie wytypuje do dalszych rewizji)\n\nPowrócę z potwierdzeniem po zakończonym skanowaniu.",
+        f: "Dzień dobry,\n\nSkanowanie kontenera zostało wyznaczona na <b>{today+1}</b>\nKontenery skanowane są przez cały dzień od 08:00-19:00 (w czasie pracy urzędu).\nZazwyczaj kontener zwalniany jest w kolejnym dniu po skanowaniu (zakładając, że Urząd Celny nie wytypuje do dalszych rewizji)\n\nPowrócę z potwierdzeniem po zakończonym skanowaniu."
+      },
+      en: {
+        m: "Good morning,\n\nContainer scanning has been scheduled for <b>{today+1}</b>\nContainers are scanned throughout the day from 8:00 to 19:00 (during office hours).\ nContainers are usually released the day after scanning (assuming that Customs does not select them for further inspection).\n\nI will return with confirmation once the scan is complete.",
+        f: "Good morning,\n\nContainer scanning has been scheduled for <b>{today+1}</b>\nContainers are scanned throughout the day from 8:00 to 19:00 (during office hours).\ nContainers are usually released the day after scanning (assuming that Customs does not select them for further inspection).\n\nI will return with confirmation once the scan is complete."
+      }
+    }
+  },
 
 {
     key: "Ostatni-dzien-składowego",
@@ -705,6 +737,7 @@ renderTemplates();
 </script>
 </body>
 </html>
+
 
 
 
