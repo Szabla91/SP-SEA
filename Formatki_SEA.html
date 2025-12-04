@@ -180,6 +180,12 @@ text-align: center;
   <a href="https://bbats.sharepoint.com/:u:/r/sites/MLK/SitePages/SEA.aspx?csf=1&web=1&e=Jd9NJJ" class="btn-back">Powrót do ekranu głównego</a>
 <h1>Baza formatek operacyjnych SEA</h1>
   <div class="form-row">
+
+ <label for="relacja">Relacja:</label>
+      <select id="relacja" onchange="renderTemplates()">
+        <option value="IMPORT">Import</option>
+        <option value="EXPORT">Export</option>
+      </select>
 <label for="typ">Typ:</label>
 <select id="typ" onchange="renderTemplates()">
   <option value="FCL">FCL</option>
@@ -213,6 +219,7 @@ const templates = [
   {
     key: "nowy-klient-ubezpieczenie",
 typ: "ALL",
+rel: "IMPORT",
     title: { pl: "Nowy klient ubezpieczenie", en: "New client insurance" },
     content: {
       pl: {
@@ -229,6 +236,7 @@ typ: "ALL",
  {
     key: "nowy-klient-ubezpieczenie-brak-danych",
 typ: "ALL",
+rel: "IMPORT",
     title: { pl: "Nowy klient ubezpieczenie - brak danych", en: "New client insurance no data" },
     content: {
       pl: {
@@ -245,6 +253,7 @@ typ: "ALL",
   {
     key: "nowy-klient-brak-ubezpieczenia",
 typ: "ALL",
+rel: "IMPORT",
     title: { pl: "Nowy klient brak ubezpieczenia", en: "New client no insurance" },
     content: {
       pl: {
@@ -261,6 +270,7 @@ typ: "ALL",
 {
     key: "Gotowosc-towaru",
 typ: "FCL",
+rel: "IMPORT",
     title: { pl: "Gotowość towaru", en: "Cargo readiness" },
     content: {
       pl: {
@@ -277,6 +287,7 @@ typ: "FCL",
 {
     key: "Gotowosc-towaru",
 typ: "LCL",
+rel: "IMPORT",
     title: { pl: "Gotowość towaru", en: "Cargo readiness" },
     content: {
       pl: {
@@ -293,6 +304,7 @@ typ: "LCL",
 {
     key: "Booking",
 typ: "FCL",
+rel: "IMPORT",
     title: { pl: "Booking", en: "Booking" },
     content: {
       pl: {
@@ -309,6 +321,7 @@ typ: "FCL",
   {
     key: "draft-BL",
 typ: "ALL",
+rel: "IMPORT",
     title: { pl: "Draft BL", en: "Draft BL" },
     content: {
       pl: {
@@ -326,6 +339,7 @@ typ: "ALL",
   {
     key: "zaladunek-kotenera",
 typ: "FCL",
+rel: "IMPORT",
     title: { pl: "Załadunek kontenera", en: "Container loading" },
     content: {
       pl: {
@@ -342,6 +356,7 @@ typ: "FCL",
  {
     key: "odbior-towaru",
 typ: "LCL",
+rel: "IMPORT",
     title: { pl: "Odbiór towaru", en: "Pickup" },
     content: {
       pl: {
@@ -358,6 +373,7 @@ typ: "LCL",
 {
     key: "Update",
 typ: "LCL",
+rel: "IMPORT",
     title: { pl: "Update", en: "Update" },
     content: {
       pl: {
@@ -374,6 +390,7 @@ typ: "LCL",
 {
     key: "Opoznienie",
 typ: "ALL",
+rel: "IMPORT",
     title: { pl: "Opóźnione wypłynięcie", en: "Delayed departure" },
     content: {
       pl: {
@@ -390,6 +407,7 @@ typ: "ALL",
 {
     key: "Wyplyniecie",
 typ: "FCL",
+rel: "IMPORT",
     title: { pl: "Wypłynięcie statku", en: "Departure" },
     content: {
       pl: {
@@ -406,6 +424,7 @@ typ: "FCL",
 {
     key: "Wyplyniecie",
 typ: "LCL",
+rel: "IMPORT",
     title: { pl: "Wypłynięcie statku", en: "Departure" },
     content: {
       pl: {
@@ -422,6 +441,7 @@ typ: "LCL",
 {
     key: "Przypomnienie-o-dokumentach",
 typ: "ALL",
+rel: "IMPORT",
     title: { pl: "Przypomnienie o dokumentach", en: "Documents reminder" },
     content: {
       pl: {
@@ -438,6 +458,7 @@ typ: "ALL",
 {
     key: "Opoznione-wplyniecie",
 typ: "ALL",
+rel: "IMPORT",
     title: { pl: "Opóźnione wpłynięcie", en: "Delayed arrival" },
     content: {
       pl: {
@@ -454,6 +475,7 @@ typ: "ALL",
 {
     key: "Wplyniecie-statku",
 typ: "LCL",
+rel: "IMPORT",
     title: { pl: "Wpłynięcie statku", en: "Vessel arrival" },
     content: {
       pl: {
@@ -470,6 +492,7 @@ typ: "LCL",
 {
     key: "Wplyniecie-statku",
 typ: "FCL",
+rel: "IMPORT",
     title: { pl: "Wpłynięcie statku", en: "Vessel arrival" },
     content: {
       pl: {
@@ -486,6 +509,7 @@ typ: "FCL",
 {
     key: "Zaplanowany-rozladunek-LCL",
 typ: "LCL",
+rel: "IMPORT",
     title: { pl: "Zaplanowany rozładunek LCL", en: "Planned devanning LCL" },
     content: {
       pl: {
@@ -502,6 +526,7 @@ typ: "LCL",
 {
     key: "Po-rozladunku-LCL",
 typ: "LCL",
+rel: "IMPORT",
     title: { pl: "Po rozładunku LCL", en: "After devanning LCL" },
     content: {
       pl: {
@@ -518,6 +543,7 @@ typ: "LCL",
 {
     key: "Dokumenty-odprawa-celna",
 typ: "ALL",
+rel: "IMPORT",
     title: { pl: "Dokumenty odprawa celna", en: "Customs clearance documents" },
     content: {
       pl: {
@@ -530,6 +556,7 @@ typ: "ALL",
 {
     key: "Dokumenty-T1",
 typ: "ALL",
+rel: "IMPORT",
     title: { pl: "Dokumenty T1", en: "T1 documents" },
     content: {
       pl: {
@@ -546,6 +573,7 @@ typ: "ALL",
   {
     key: "Zlecenie skanowania",
 typ: "FCL",
+rel: "IMPORT",
     title: { pl: "Zlecenie skanowania", en: "Scanning order" },
     content: {
       pl: {
@@ -562,6 +590,7 @@ typ: "FCL",
   {
     key: "Potwierdzenie skanowania",
 typ: "FCL",
+rel: "IMPORT",
     title: { pl: "Potwierdzenie skanowania", en: "Scanning confirmation" },
     content: {
       pl: {
@@ -578,6 +607,7 @@ typ: "FCL",
 {
     key: "Ostatni-dzien-składowego",
 typ: "LCL",
+rel: "IMPORT",
     title: { pl: "Ostatni dzień składowego", en: "Last storage day" },
     content: {
       pl: {
@@ -594,6 +624,7 @@ typ: "LCL",
 {
     key: "Ostatni-dzien-demurrage",
 typ: "FCL",
+rel: "IMPORT",
     title: { pl: "Ostatni dzień demurrage", en: "Last demurrage day" },
     content: {
       pl: {
@@ -610,6 +641,7 @@ typ: "FCL",
 {
     key: "Naleznosci-celne-RUSAK",
 typ: "ALL",
+rel: "IMPORT",
     title: { pl: "Należności celne RUSAK", en: "Customs duties" },
     content: {
       pl: {
@@ -624,6 +656,7 @@ typ: "ALL",
 {
     key: "Naleznosci-celne",
 typ: "ALL",
+rel: "IMPORT",
     title: { pl: "Należności celne", en: "Customs duties" },
     content: {
       pl: {
@@ -638,6 +671,7 @@ typ: "ALL",
 {
     key: "Po-odprawie",
 typ: "FCL",
+rel: "IMPORT",
     title: { pl: "Po odprawie", en: "After customs" },
     content: {
       pl: {
@@ -651,6 +685,7 @@ typ: "FCL",
 {
     key: "Po-odprawie",
 typ: "LCL",
+rel: "IMPORT",
     title: { pl: "Po odprawie", en: "After customs" },
     content: {
       pl: {
@@ -665,6 +700,7 @@ typ: "LCL",
 {
     key: "Awizacja-na-magazyn",
 typ: "LCL",
+rel: "IMPORT",
     title: { pl: "Awizacja na magazyn", en: "Advice on warehouse" },
     content: {
       pl: {
@@ -677,6 +713,7 @@ typ: "LCL",
 {
     key: "Awizacja-do-klienta",
 typ: "LCL",
+rel: "IMPORT",
     title: { pl: "Awizacja do klienta", en: "Advice to client" },
     content: {
       pl: {
@@ -690,6 +727,90 @@ typ: "LCL",
     }
   },
 
+{
+    key: "Nowe zlecenie EX",
+    typ: "ALL",
+rel: "EXPORT",
+    title: { pl: "Nowe zlecenie eksportowe", en: "New EXP transport" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nMiło mi z Panem pisać po raz pierwszy.\n\nBędę zajmował się obsługą operacyjną Pana przesyłki i informował na bieżąco o postępach.\n\nSkładam booking u armatora. Powrócę z potwierdzeniem rezerwacji miejsca na statku.\n\nW między czasie przesyłam w załączeniu forme SI. Serdeczna prośba o uzupełnienie i odesłanie pliku. Jeżeli dostępna jest już faktura / proforma handlowa to również proszę o przesłanie.",
+        f: "Dzień dobry,\n\nMiło mi z Panem pisać po raz pierwszy.\n\nBędę zajmowała się obsługą operacyjną Pana przesyłki i informowała na bieżąco o postępach.\n\nSkładam booking u armatora. Powrócę z potwierdzeniem rezerwacji miejsca na statku.\n\nW między czasie przesyłam w załączeniu forme SI. Serdeczna prośba o uzupełnienie i odesłanie pliku. Jeżeli dostępna jest już faktura / proforma handlowa to również proszę o przesłanie."
+      },
+      en: {
+        m: "Good morning,\n\nIt is a pleasure to write to you for the first time.\n\nI will be handling the operational aspects of your shipment and will keep you informed of its progress.\ I am submitting a booking request to the shipowner. I will get back to you with confirmation of your reservation on the ship. In the meantime, please find attached the SI form. Kindly complete and return the file. If the invoice/proforma invoice is already available, please send it to me as well.",
+        f: "Good morning,\n\nIt is a pleasure to write to you for the first time.\n\nI will be handling the operational aspects of your shipment and will keep you informed of its progress.\ I am submitting a booking request to the shipowner. I will get back to you with confirmation of your reservation on the ship. In the meantime, please find attached the SI form. Kindly complete and return the file. If the invoice/proforma invoice is already available, please send it to me as well."
+      }
+    }
+  },
+
+{
+    key: "Booking EX",
+    typ: "ALL",
+rel: "EXPORT",
+    title: { pl: "Booking eksportowy", en: "EXP booking" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nOtrzymałem potwierdzenie bookingu od armatora, szczegóły przesyłam poniżej:\n\nVia Bremerhaven\nBooking ref.: \nCut-off: \nETD Gdynia: \nETD Bremerhaven: \nETA Cebu: \n\nPlanujemy załadunek kontenera na  \nDodaję koleżankę @Anna Zaborska, która zajmie się organizacją kontenera do załadunku.\n\nPowrócimy z kolejnymi informacjami.",
+        f: "Dzień dobry,\n\nOtrzymałam potwierdzenie bookingu od armatora, szczegóły przesyłam poniżej:\n\nVia Bremerhaven\nBooking ref.: \nCut-off: \nETD Gdynia: \nETD Bremerhaven: \nETA Cebu: \n\nPlanujemy załadunek kontenera na  \nDodaję koleżankę @Anna Zaborska, która zajmie się organizacją kontenera do załadunku.\n\nPowrócimy z kolejnymi informacjami."
+      },
+      en: {
+        m: "Good morning,\n\nI have received confirmation of the booking from the shipowner. Details are provided below:\n\nVia Bremerhaven\nBooking ref.: \nCut-off: ETD Gdynia: ETD Bremerhaven: ETA Cebu: We are planning to load the container on . I am adding my colleague @Anna Zaborska, who will take care of organizing the container for loading. We will be back with more information.",
+        f: "Good morning,\n\nI have received confirmation of the booking from the shipowner. Details are provided below:\n\nVia Bremerhaven\nBooking ref.: \nCut-off: ETD Gdynia: ETD Bremerhaven: ETA Cebu: We are planning to load the container on . I am adding my colleague @Anna Zaborska, who will take care of organizing the container for loading. We will be back with more information."
+      }
+    }
+  },
+
+{
+    key: "Draft BL EX",
+    typ: "ALL",
+rel: "EXPORT",
+    title: { pl: "Draft BL", en: "Draft BL" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nPrzesyłam draft BL.\n\nProszę o sprawdzenie poprawności danych i zwrotne potwierdzenie mailowe.",
+        f: "Dzień dobry,\n\nPrzesyłam draft BL.\n\nProszę o sprawdzenie poprawności danych i zwrotne potwierdzenie mailowe."
+      },
+      en: {
+        m: "Good morning,\n\nI am sending you the draft BL.\n\nPlease check that the details are correct and confirm by email.",
+        f: "Good morning,\n\nI am sending you the draft BL.\n\nPlease check that the details are correct and confirm by email."
+      }
+    }
+  },
+
+{
+    key: "Po odprawie EX",
+    typ: "ALL",
+rel: "EXPORT",
+    title: { pl: "Po odprawie", en: "After customs clearance." },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nKontener po odprawie, EX w załączeniu.\n\nPowrócę z  finalnym BL oraz potwierdzeniem wywozu z EU (CC599) po wypłynięciu z portu.",
+        f: "Dzień dobry,\n\nKontener po odprawie, EX w załączeniu.\n\nPowrócę z  finalnym BL oraz potwierdzeniem wywozu z EU (CC599) po wypłynięciu z portu."
+      },
+      en: {
+        m: "Good morning,\n\nThe container has been cleared, EX attached.\n\nI will return with the final BL and confirmation of export from the EU (CC599) after departure from the port.",
+        f: "Good morning,\n\nThe container has been cleared, EX attached.\n\nI will return with the final BL and confirmation of export from the EU (CC599) after departure from the port."
+      }
+    }
+  },
+
+{
+    key: "Wypłynięcie EX",
+    typ: "ALL",
+rel: "EXPORT",
+    title: { pl: "Wypłynięcie", en: "Departure" },
+    content: {
+      pl: {
+        m: "Dzień dobry,\n\nKontener wypłynął statkiem \nPlanowane przypłynięcie do Gdańska: ok. 17.01\n\nW załączeniu przesyłam BL, fakturę transportową oraz potwierdzenie wywozu (CC599) - proszę o potwierdzenie poprawności danych.",
+        f: "Dzień dobry,\n\nKontener wypłynął statkiem 03.12\nPlanowane przypłynięcie do Gdańska: ok. 17.01\n\nW załączeniu przesyłam BL, fakturę transportową oraz potwierdzenie wywozu (CC599) - proszę o potwierdzenie poprawności danych."
+      },
+      en: {
+        m: "Good morning,\n\n",
+        f: "Good morning,\n\n"
+      }
+    }
+  },
 
 ];
 
@@ -712,32 +833,37 @@ function renderTemplates() {
   const typ = document.getElementById('typ').value;
   const lang = document.getElementById('lang').value;
   const gender = document.getElementById('gender').value;
+const rel = document.getElementById('relacja').value; 
   const view = document.getElementById('view') ? document.getElementById('view').value : "column";
   const list = document.getElementById('templates-list');
   list.innerHTML = '';
   list.className = 'templates-list' + (view === "row" ? ' row' : '');
 
-  templates
-  .filter(t =>
-    (!t.typ || t.typ === typ || t.typ === "ALL") && t.content[lang] && t.content[lang][gender]
-  )
-  .forEach(t => {
-    let text = t.content[lang][gender] || '';
-    text = insertDynamicDates(text);
-    const block = document.createElement('div');
-    block.className = 'template-block' + (view === "row" ? ' row-block' : '');
-    block.innerHTML = `
-      <div class="template-header">${t.title[lang]}</div>
-      <div class="template-content">${text.replace(/\n/g,'<br>')}</div>
-    `;
-    list.appendChild(block);
-  });
+ templates
+    .filter(t => {
+      const relOk = !t.rel || rel === "ALL" || t.rel === "ALL" || t.rel === rel;
+      const typOk = (!t.typ || typ === "ALL" || t.typ === "ALL" || t.typ === typ);
+      const hasContent = t.content[lang] && t.content[lang][gender];
+      return relOk && typOk && hasContent;
+    })
+    .forEach(t => {
+      let text = t.content[lang][gender] || '';
+      text = insertDynamicDates(text);
+      const block = document.createElement('div');
+      block.className = 'template-block' + (view === "row" ? ' row-block' : '');
+      block.innerHTML = `
+        <div class="template-header">${t.title[lang]}</div>
+        <div class="template-content">${text.replace(/\n/g,'<br>')}</div>
+      `;
+      list.appendChild(block);
+    });
 }
+
 renderTemplates();
 </script>
+</div>
 </body>
 </html>
-
 
 
 
