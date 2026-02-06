@@ -491,19 +491,21 @@ MSC: {
 
 const storagePricing = {
   COSCO: {
-    freeDays: { Gdansk: 8, Gdynia: 8 },
+    freeDays: { Gdansk: 6, Gdynia: 8 },
     Gdansk: {
       "20DRY": [
-        { from: 9, to: 14, rate: 7 },
+        { from: 7, to: 14, rate: 7 },
         { from: 15, to: 30, rate: 15 },
         { from: 31, to: 60, rate: 25 },
-        { from: 61, to: Infinity, rate: 50 },
+        { from: 61, to: 90, rate: 50 },
+        { from: 91, to: Infinity, rate: 60 },
       ],
       "40DRY": [
-        { from: 9, to: 14, rate: 14 },
+        { from: 7, to: 14, rate: 14 },
         { from: 15, to: 30, rate: 30 },
         { from: 31, to: 60, rate: 50 },
-        { from: 61, to: Infinity, rate: 100 },
+        { from: 61, to: 90, rate: 100 },
+        { from: 91, to: Infinity, rate: 120 },
       ],
     },
     Gdynia: {
@@ -1114,6 +1116,7 @@ document.getElementById("t_end").addEventListener("change", () => {
   </script>
 </body>
 </html>
+
 
 
 
